@@ -1,6 +1,7 @@
+CREATE DATABASE airlinedatabase;
 
 CREATE TABLE Users(
-userID varchar(255) NOT NULL,
+userID varchar(40) NOT NULL,
 userPassword varchar(20) NOT NULL,
 PRIMARY KEY(userID)
 );
@@ -9,7 +10,7 @@ CREATE TABLE Seats(
 seatRow int NOT NULL,
 seatColumn char(1) NOT NULL,
 seatState ENUM('purchased','free','selected') NOT NULL,
-holdingUser varchar(255),
+holdingUser varchar(40),
 CONSTRAINT RC_seat PRIMARY KEY (seatRow,seatColumn)
 );
 
