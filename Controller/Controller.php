@@ -11,13 +11,7 @@ class Controller
         $numberOfColumns = 6;
         $numberOfRows = 10;
         $char = 'A';
-
-
         $myModel = new Model($modelData['userName'],$modelData['password'],$modelData['dbName']);
-
-        $postUserName = $_POST['userName'];
-        $postPassword = $_POST['password'];
-        $myModel->insertUser($postUserName,$postPassword);
 
         for($i=0;$i<($numberOfRows);$i++){
             for($j=0;$j<($numberOfColumns);$j++){
@@ -43,10 +37,23 @@ class Controller
             echo $row['userID']." ".$row['userPassword'];
 
         }
-        echo "<br>";*/
+        echo "<br>";
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $postUserName = $_POST['userName'];
+            $postPassword = $_POST['password'];
+        }
+            */
     }
+    
 
 }
+
+
+
+
+
+
 $modelData=array("userName"=>"mohamed", "password"=>"mohamed", "dbName"=>"airlinedatabase");
 $myController = new Controller($modelData);
 ?>
