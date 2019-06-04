@@ -1,4 +1,4 @@
-CREATE DATABASE airlinedatabase;
+CREATE DATABASE IF NOT EXISTS airlinedatabase;
 USE airlinedatabase;
 
 drop user 'mohamed'@'localhost';
@@ -8,13 +8,13 @@ CREATE USER 'mohamed'@'localhost' IDENTIFIED BY 'mohamed';
 GRANT ALL PRIVILEGES ON * . * TO 'mohamed'@'localhost';
 flush privileges;
 
-CREATE TABLE Users(
+CREATE TABLE IF NOT EXISTS Users(
 userID varchar(40) NOT NULL,
 userPassword varchar(20) NOT NULL,
 PRIMARY KEY(userID)
 );
 
-CREATE TABLE Seats(
+CREATE TABLE IF NOT EXISTS Seats(
 seatRow int NOT NULL,
 seatColumn char(1) NOT NULL,
 seatState ENUM('purchased','free','selected') NOT NULL,

@@ -44,11 +44,11 @@ class Model
     function insertSeat($seat_row, $seat_column,$seat_state){
 
         global $conn;
-        $stmt = mysqli_prepare($conn,"INSERT INTO airlinedatabase.Seats(seatRow, seatColumn,seatState) VALUES(?,?,?);");
+        $stmt = mysqli_prepare($conn,"INSERT INTO airlinedatabase.Seats(seatRow,seatColumn,seatState) VALUES(?,?,?);");
         if(!$stmt){
-            die("Error during UPDATE Seat state:".mysqli_error());
+            die("Error during INSERT Seat:".mysqli_error());
         }
-        mysqli_stmt_bind_param($stmt1,"iss",$seat_row,$seat_column,$seat_state);
+        mysqli_stmt_bind_param($stmt,"iss",$seat_row,$seat_column,$seat_state);
         mysqli_stmt_execute($stmt);
     }
 
