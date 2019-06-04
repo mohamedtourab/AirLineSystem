@@ -5,6 +5,8 @@ drop user 'mohamed'@'localhost';
 flush privileges;
 
 CREATE USER 'mohamed'@'localhost' IDENTIFIED BY 'mohamed';
+GRANT ALL PRIVILEGES ON * . * TO 'mohamed'@'localhost';
+flush privileges;
 
 CREATE TABLE Users(
 userID varchar(40) NOT NULL,
