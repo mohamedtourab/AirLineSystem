@@ -1,0 +1,114 @@
+
+html {
+    font-size: 16px;
+    box-sizing: border-box;
+}
+#Title{
+    text-align: center;
+}
+.pageTitle{
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.plane {
+    margin: 20px auto;
+    max-width: 300px;
+    box-sizing: border-box;
+}
+
+.cockpit {
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    border-bottom: 5px solid #d8d8d8;
+    box-sizing: border-box;
+}
+.cockpit:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 500px;
+    width: 100%;
+    border-radius: 50%;
+    border-right: 5px solid #d8d8d8;
+    border-left: 5px solid #d8d8d8;
+    box-sizing: border-box;
+}
+
+.cockpit h1 {
+    width: 60%;
+    margin: 100px auto 35px auto;
+    box-sizing: border-box;
+}
+/*draw the two lines that show the two sides of the plane*/
+.fuselage {
+    border-right: 5px solid #d8d8d8;
+    border-left: 5px solid #d8d8d8;
+    box-sizing: border-box;
+}
+/*remove the numbers of the ordered list*/
+ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.seats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+.seat {
+    display: flex;
+    flex: 0 0 14.28571428571429%;
+    padding: 5px;
+    position: relative;
+    box-sizing: border-box;/*it makes all of the boxes between the borders*/
+}
+
+/*put a margin between each 3 seats */
+.seat:nth-child(3) {
+    margin-right: 14.28571428571429%;
+}
+
+/*remove the box that I check by click on it*/
+.seat input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+    box-sizing: border-box;
+}
+/*checked+label means that the style will be applied for the checked button and its label*/
+.seat input[type=checkbox]:checked + label {
+    background: yellow;
+    box-sizing: border-box;
+}
+
+
+.seat label {
+    display: block;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.5rem;
+    padding: 4px 0;
+    background: green;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+}
+
+.seat label:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0 2px #5C6AFF;
+    box-sizing: border-box;
+}

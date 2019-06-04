@@ -1,4 +1,10 @@
 CREATE DATABASE airlinedatabase;
+USE airlinedatabase;
+
+drop user 'mohamed'@'localhost';
+flush privileges;
+
+CREATE USER 'mohamed'@'localhost' IDENTIFIED BY 'mohamed';
 
 CREATE TABLE Users(
 userID varchar(40) NOT NULL,
@@ -17,8 +23,9 @@ CONSTRAINT RC_seat PRIMARY KEY (seatRow,seatColumn)
 -- Insert rows into table 'TableName'
 INSERT INTO Users(userID, userPassword) VALUES('mohamedmamdouh','1234');
 INSERT INTO Users(userID, userPassword) VALUES('mamdouhtourab','78910');
-INSERT INTO Seats(seatRow, seatColumn,seatState) VALUES('1','A','free');
+
+/*INSERT INTO Seats(seatRow, seatColumn,seatState) VALUES('1','A','free');
 INSERT INTO Seats(seatRow, seatColumn,seatState) VALUES('2','A','free');
 INSERT INTO Seats(seatRow, seatColumn,seatState) VALUES('3','A','free');
 INSERT INTO Seats(seatRow, seatColumn,seatState) VALUES('4','A','free');
-
+*/
