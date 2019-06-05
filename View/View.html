@@ -5,7 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>AirLine Ticket Reservation</title>
     <link rel="stylesheet" href="style.css">
-
+    <script>
+        function showLoginForm() {
+            document.getElementById("formSignUp").style.display="none";
+            document.getElementById("formLogin").style.display="block";
+        }
+        function showSignUpForm() {
+            document.getElementById("formSignUp").style.display="block";
+            document.getElementById("formLogin").style.display="none";
+        }
+    </script>
 </head>
 
 <body id="BodyId">
@@ -16,23 +25,32 @@
     </div>
 
     <div id="divForm">
-        <form id="form" name="registerationForm" action="../Controller/Controller.php" method="post">
+        <form id="formLogin" name="loginForm" action="../Controller/Controller.php" method="post">
 
-            <label for="userNameID"><b>UserID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input id="userNameID" name="userName" type="text" required>
+            <label for="loginUserNameID"><b><span style="font-size: 20px">UserID</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input id="loginUserNameID" name="userName" type="text" style="font-size: 12pt; width: 400px" required>
             <br><br>
-            <label for="passwordID"><b>Password&nbsp;</b></label>
-            <input id="passwordID" name="password" type="password" required>
+            <label for="loginPasswordID"><b><span style="font-size: 20px">Password</span>&nbsp;</b></label>
+            <input id="loginPasswordID" name="password" type="password"  style="font-size: 12pt; width: 400px" required>
             <br><br>
-            <input type="submit" value="Login" name="loginButton">
+            <input type="submit" value="Login" name="loginButton" style="font-size: 15px">
+        </form>
 
+        <form id="formSignUp" name="signUpForm" action="../Controller/Controller.php" method="post">
+            <label for="signUpUserNameID"><b><span style="font-size: 20px">UserID</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input id="signUpUserNameID" name="userName" type="text" style="font-size: 12pt; width: 400px" required>
+            <br><br>
+            <label for="signUpPasswordID"><b><span style="font-size: 20px">Password</span>&nbsp;</b></label>
+            <input id="signUpPasswordID" name="password" type="password"  style="font-size: 12pt; width: 400px" required>
+            <br><br>
+            <input type="submit" value="Sign up" name="signUpButton" style="font-size: 15px">
         </form>
     </div>
 </div>
 
 <div class="sidenav">
-    <a class="show_form" href="#">Sign up</a>
-    <a class="show_form" href="#">Login</a>
+    <a class="show_form" href="#" onclick="showSignUpForm()">Sign up</a>
+    <a class="show_form" href="#" onclick="showLoginForm()">Login</a>
     <a class="show_form" href="#">Buy</a>
 </div>
 
