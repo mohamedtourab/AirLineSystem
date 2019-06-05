@@ -136,6 +136,14 @@ ol {
     box-sizing: border-box;
 }
 
+.seat input[type=checkbox]:disabled + label {
+    background: red;
+    overflow: hidden;
+}
+.seat input[type=checkbox]:disabled + label:hover {
+    box-shadow: none;
+    cursor: not-allowed;
+}
 
 .seat label {
     display: block;
