@@ -2,18 +2,19 @@
 <html lang="en" >
 
 <head>
-    <meta charset="UTF-8">
-    <title>CSS seat booking</title>
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>AirLine Ticket Reservation</title>
     <link rel="stylesheet" href="style.css">
-
 
 </head>
 
-<body>
+<body id="BodyId">
 
 <div id="mainDiv">
-    <p><h1 id="Title">AirLine Ticket Reservation System</h1></p>
+    <div id="titleDiv">
+        <p id="Title">AirLine Ticket Reservation System</p>
+    </div>
+
     <div id="divForm">
         <form id="form" name="registerationForm" action="../Controller/Controller.php" method="post">
 
@@ -27,6 +28,12 @@
 
         </form>
     </div>
+</div>
+
+<div class="sidenav">
+    <a class="show_form" href="#">Sign up</a>
+    <a class="show_form" href="#">Login</a>
+    <a class="show_form" href="#">Buy</a>
 </div>
 
 <div class="plane">

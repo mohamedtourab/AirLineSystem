@@ -2,10 +2,10 @@
 
 class Model
 {
-    protected $password;
-    protected $dbName;
-    protected $user;
-    protected $conn;
+    var $password;
+    var $dbName;
+    var $user;
+    var $conn;
     function __construct($userName,$Password,$DbName)
     {
         global $conn;

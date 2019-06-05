@@ -1,15 +1,48 @@
-
+* { margin: 0; }
 html {
     font-size: 16px;
     box-sizing: border-box;
 }
 #Title{
+    font-size: 65px;
+    background-color: lightgrey;
+    text-align: left;
+    color: Black;
+}
+#form{
+    margin-top: 10px;
+    margin-left: 170px;
     text-align: center;
 }
 .pageTitle{
     text-align: center;
     box-sizing: border-box;
 }
+
+.sidenav {
+    height:100%;
+    width: 160px;
+    position: fixed;
+    z-index: 1;
+    top: 75px;
+    left: 0;
+    background-color: lightgrey;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: Black;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: white;
+}
+
 
 .plane {
     margin: 20px auto;
