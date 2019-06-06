@@ -16,17 +16,25 @@ function sendSignUpForm(){
             userName: document.getElementById("signUpUserNameID").value,
             password: document.getElementById("signUpPasswordID").value
         },
+        dataType:'text',
         success: function (response) {
-            //
+            document.getElementById("formSignUp").style.display="none";
+            document.getElementById("formLogin").style.display="none";
+            document.getElementById("buyID").style.display="block";
+            document.getElementById("updateID").style.display="block";
+            document.getElementById("welcomeParagraph").innerHTML="Welcome "+response+" to our Airline company";
+            document.getElementById("welcomeParagraph").style.display = "block";
+
         },
         error: function (xhr) {
-            //Do Something to handle error
+            document.write("Error while signup");
         }
     });
 
 
 }
 function sendLoginForm() {
+
     $.ajax({
         url: "../Controller/controllerHandler.php",
         type: "POST", //send it through post method
@@ -35,10 +43,17 @@ function sendLoginForm() {
             userName: document.getElementById("loginUserNameID").value,
             password: document.getElementById("loginPasswordID").value
         },
+        dataType:'text',
         success: function (response) {
-
+            document.getElementById("formSignUp").style.display="none";
+            document.getElementById("formLogin").style.display="none";
+            document.getElementById("buyID").style.display="block";
+            document.getElementById("updateID").style.display="block";
+            document.getElementById("welcomeParagraph").innerHTML="Welcome "+response+" to our Airline company";
+            document.getElementById("welcomeParagraph").style.display = "block";
         },
         error: function (xhr) {
+
             //Do Something to handle error
         }
     });
@@ -85,7 +100,7 @@ function selectSeat(seat) {
     var seatID = seat.id;
     var seatRow = Number(seatID.charAt(0));
     var seatColumn = seatID.charAt(1);
-    //TODO Create ajaxRequest here;
+
     $.ajax({
         url: "../Controller/controllerHandler.php",
         type: "POST", //send it through post method
@@ -94,15 +109,22 @@ function selectSeat(seat) {
             row: seatRow,
             column: seatColumn
         },
+        dataType:'text',
         success: function (response) {
-            if (response.toString() === 'free') {
-                selectedSeats.push(seat);
-            } else if (response === 'selected') {
-
-
-            } else if (response.toString() === 'purchased') {
-                seat.disabled = true;
+            if(response.toString() == 'timeout'){
+                //TODO timeout response
             }
+            else {
+                if (response.toString() === 'free') {
+                    selectedSeats.push(seat);
+                } else if (response === 'selected') {
+
+
+                } else if (response.toString() === 'purchased') {
+                    seat.disabled = true;
+                }
+            }
+
         },
         error: function (xhr) {
             //Do Something to handle error

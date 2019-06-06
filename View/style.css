@@ -11,9 +11,15 @@ html {
     height: 100px;
     color: White;
 }
-label{
-    font-family: Cambria;
+#welcomeParagraph{
+    font-size: 30px;
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 170px;
+
 }
+
+
 #formLogin{
     margin-top: 30px;
     margin-left: 170px;
@@ -30,12 +36,17 @@ label{
     text-align: center;
     box-sizing: border-box;
 }
+#buyID{
+    display: none;
+}
+#updateID{
+    display: none;
+}
 
 .sidenav {
     height:100%;
     width: 160px;
     position: fixed;
-    z-index: 1;
     top: 100px;
     left: 0;
     background-color: #ffe5cd;
@@ -48,7 +59,6 @@ label{
     text-decoration: none;
     font-size: 25px;
     color: Black;
-    display: block;
 }
 
 .sidenav a:hover {
@@ -74,7 +84,7 @@ label{
 /*the curve that simulates the cockpit*/
 .cockpit:before {
     content: "";
-    display: block;
+   /* display: block;*/
     position: absolute;
     top: 0;
     left: 0;

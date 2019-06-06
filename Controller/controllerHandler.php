@@ -1,15 +1,19 @@
 <?php
 require_once 'Controller.php';
 
-$modelData=array("userName"=>"mohamed", "password"=>"mohamed", "dbName"=>"airlinedatabase");
+$modelData=array("dbuserName"=>"mohamed", "dbpassword"=>"mohamed", "dbName"=>"airlinedatabase");
 $myController = new Controller($modelData);
 
 if(isset($_POST['signUpRequest'])){
-    $myController->signUp();
+    $result = $myController->signUp();
+    echo $result;
+    exit();
 }
 
 if(isset($_POST['loginRequest'])){
     $loginResult = $myController->Login();
+    echo $loginResult;
+    exit();
 }
 
 if(isset($_POST['checkSeatState'])){
@@ -19,12 +23,16 @@ if(isset($_POST['checkSeatState'])){
 }
 
 if(isset($_POST['reserveSeatRequest'])){
-    $myController->reserveSeat();
+    $result = $myController->reserveSeat();
+    echo $result;
+    exit();
 }
 
 
 if(isset($_POST['purchaseSeatRequest'])){
-    $myController->purchaseSeat();
+   $result = $myController->purchaseSeat();
+   echo $result;
+   exit();
 }
 
 ?>
