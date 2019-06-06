@@ -7,9 +7,47 @@ function showSignUpForm() {
     document.getElementById("formLogin").style.display="none";
 }
 
+function sendSignUpForm(){
+    $.ajax({
+        url: "../Controller/controllerHandler.php",
+        type: "POST", //send it through post method
+        data: {
+            signUpRequest: 'yes',
+            userName: document.getElementById("signUpUserNameID").value,
+            password: document.getElementById("signUpPasswordID").value
+        },
+        success: function (response) {
+            //
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    });
+
+
+}
+function sendLoginForm() {
+    $.ajax({
+        url: "../Controller/controllerHandler.php",
+        type: "POST", //send it through post method
+        data: {
+            loginRequest: 'yes',
+            userName: document.getElementById("loginUserNameID").value,
+            password: document.getElementById("loginPasswordID").value
+        },
+        success: function (response) {
+
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    });
+}
+
+
 function initSeat(){
     var numberOfColumns = 6;
-    var numberOfRows = 14;
+    var numberOfRows = 10;
     var orderedList = document.getElementById("cabin");
 
     for(var i=0;i<numberOfRows;i++){
@@ -31,6 +69,7 @@ function initSeat(){
             var currentChar = String.fromCharCode("A".charCodeAt(0) + Number(j));
             var currentId = ((Number(i)+Number(1))+currentChar).toString();
             inputElement.setAttribute("id",currentId);
+            inputElement.setAttribute("onclick","selectSeat(this)");
             innerItemList.appendChild(inputElement);
             var labelElement = document.createElement("label");
             labelElement.setAttribute("for",currentId);
@@ -41,38 +80,34 @@ function initSeat(){
     }
 
 }
+var selectedSeats;
+function selectSeat(seat) {
+    var seatID = seat.id;
+    var seatRow = Number(seatID.charAt(0));
+    var seatColumn = seatID.charAt(1);
+    //TODO Create ajaxRequest here;
+    $.ajax({
+        url: "../Controller/controllerHandler.php",
+        type: "POST", //send it through post method
+        data: {
+            checkSeatState: 'yes',
+            row: seatRow,
+            column: seatColumn
+        },
+        success: function (response) {
+            document.write(response);
+            if (response.toString() === 'free') {
+                selectedSeats.push(seat);
+            } else if (response === 'selected') {
 
-var req;
-
-function ajaxRequest() {
-    try { // Non IE Browser?
-        var request = new XMLHttpRequest()
-    } catch(e1){ // No
-        try { // IE 6+?
-            request = new ActiveXObject("Msxml2.XMLHTTP")
-        } catch(e2){ // No
-            try { // IE 5?
-                request = new ActiveXObject("Microsoft.XMLHTTP")
-            } catch(e3){ // No AJAX Support
-                request = false
+            } else if (response.toString() === 'purchased') {
+                seat.disabled = true;
             }
+        },
+        error: function (xhr) {
+            //Do Something to handle error
         }
-    }
-    return request
-}
+    });
 
-// Handler definition
-function f(){
-    if (req.readyState==4 &&
-        (req.status== 0 || req.status==200)) {
-        document.getElementById("tochange").
-            innerHTML=req.responseText;
-    };
-}
 
-function startAjax() {
-    req = ajaxRequest();
-    req.onreadystatechange = f;
-    req.open("GET","ajax.txt", true);
-    req.send();
 }

@@ -16,14 +16,98 @@ class Controller
 
         for($i=0;$i<($numberOfRows);$i++){
             for($j=0;$j<($numberOfColumns);$j++){
-                $myModel->insertSeat(($i+1),$char,'free');
+                $myModel->insertSeat(($i+1),$char,'purchased');
                 $char++;
                 if($j==$numberOfColumns-1){
                     $char='A';
                 }
             }
         }
-        //Test for the database inteface functions
+    }
+
+
+    function signUp(){
+        global $myModel;
+
+        if(isset($_POST['userName'])&&isset($_POST['password'])){
+            $postUserName = $_POST['userName'];
+            $postPassword = $_POST['password'];
+            $myModel->insertUser($postUserName,$postPassword);
+        }
+
+    }
+
+
+    /**
+     * @return bool
+     */
+    function Login(){
+        global $myModel;
+
+        if(isset($_POST['userName'])&&isset($_POST['password'])){
+            $postUserName = $_POST['userName'];
+            $postPassword = $_POST['password'];
+            $result = $myModel->select("SELECT * FROM airlinedatabase.Users WHERE userID = $postUserName AND userPassword = $postPassword ");
+            if(!$result){
+                echo "ERROR IN Login";
+                return false;
+            }
+            $row =  mysqli_fetch_assoc($result);
+            $retrievedPassword = $row['userPassword'];
+            if($retrievedPassword == $postPassword){
+                return true;
+            }
+        }
+
+
+    }
+
+    function checkSelectedSeat(){
+        global $myModel;
+        if(isset($_POST['row']) && isset($_POST['column'])){
+            $row = $_POST['row'];
+            $column = $_POST['column'];
+            $result = $myModel->select("SELECT seatState FROM Seats WHERE seatRow = $row AND seatColumn = $column");
+            if(!$result){
+                echo "ERROR IN checkSeatState";
+                return false;
+            }
+            $value = mysqli_fetch_assoc($result);
+            $retrievedState = $value['seatState'];
+            return $retrievedState;
+        }
+
+
+    }
+
+    function reserveSeart(){
+            global $myModel;
+            if(isset($_POST['row']) && isset($_POST['column']) && isset($_POST['reservingUserName']) ){
+                $row = $_POST['row'];
+                $column = $_POST['column'];
+                $reserveingUser = $_POST['reservingUserName'];
+                $myModel->updateSeatState('selected',$reserveingUser,$row,$column);
+            }
+
+    }
+
+    function purchaseSeat(){
+        global $myModel;
+        if(isset($_POST['row']) && isset($_POST['column']) && isset($_POST['purchaseUserName']) ){
+            $row = $_POST['row'];
+            $column = $_POST['column'];
+            $purchasingUser = $_POST['purchaseUserName'];
+            $myModel->updateSeatState('purchased',$purchasingUser,$row,$column);
+
+        }
+
+    }
+
+}
+
+
+
+//Test for the database inteface functions
 /*
         $result = $myModel->select('SELECT * FROM airlinedatabase.Seats');
         while($row = mysqli_fetch_assoc($result)){
@@ -45,98 +129,5 @@ class Controller
             $postPassword = $_POST['password'];
         }
             */
-    }
 
-
-    function signUp(){
-        global $myModel;
-        if(isset($_POST['signUpRequest'])){
-            if(isset($_POST['userName'])&&isset($_POST['password'])){
-                $postUserName = $_POST['userName'];
-                $postPassword = $_POST['password'];
-                $myModel->insertUser($postUserName,$postPassword);
-            }
-        }
-    }
-
-
-    /**
-     * @return bool
-     */
-    function Login(){
-        global $myModel;
-        var $row;
-        var $retrievedPassword=null;
-
-        if(isset($_POST['loginRequest'])){
-            if(isset($_POST['userName'])&&isset($_POST['password'])){
-                $postUserName = $_POST['userName'];
-                $postPassword = $_POST['password'];
-                $result = $myModel->select("SELECT * FROM airlinedatabase.Users WHERE userID = $postUserName AND userPassword = $postPassword ");
-                if(!$result){
-                    echo "ERROR IN Login";
-                    return false;
-                }
-                $row =  mysqli_fetch_assoc($result);
-                $retrievedPassword = $row['userPassword'];
-                if($retrievedPassword == $postPassword){
-                    return true;
-                }
-            }
-
-        }
-    }
-
-    function checkSelectedSeat(){
-        if(isset($_POST['checkSeatState'])){
-            if(isset($_POST['row']) && isset($_POST['column'])){
-                $row = $_POST['row'];
-                $column = $_POST['column'];
-                $result = $myModel->select("SELECT seatState FROM airlinedatabase.Seats WHERE seatRow = $row AND seatColumn = $column");
-                if(!$result){
-                    echo "ERROR IN checkSeatState";
-                    return false;
-                }
-                $value = mysqli_fetch_assoc($result);
-                $retrievedState = $value['seatState'];
-                return $retrievedState;
-
-            }
-
-        }
-    }
-
-    function reserveSeart(){
-        if(isset($_POST['reserveSeatRequest'])){
-            if(isset($_POST['row']) && isset($_POST['column']) && isset($_POST['reservingUserName']) ){
-                $row = $_POST['row'];
-                $column = $_POST['column'];
-                $reserveingUser = $_POST['reservingUserName'];
-                $myModel->updateSeatState('selected',$reserveingUser,$row,$column);
-
-            }
-        }
-    }
-
-    function purchaseSeat(){
-        if(isset($_POST['purchaseSeatRequest'])){
-            if(isset($_POST['row']) && isset($_POST['column']) && isset($_POST['purchaseUserName']) ){
-                $row = $_POST['row'];
-                $column = $_POST['column'];
-                $purchasingUser = $_POST['purchaseUserName'];
-                $myModel->updateSeatState('purchased',$purchasingUser,$row,$column);
-
-            }
-        }
-    }
-
-}
-
-
-
-
-
-
-$modelData=array("userName"=>"mohamed", "password"=>"mohamed", "dbName"=>"airlinedatabase");
-$myController = new Controller($modelData);
 ?>
