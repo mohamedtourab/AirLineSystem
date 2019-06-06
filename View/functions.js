@@ -99,6 +99,7 @@ function selectSeat(seat) {
                 selectedSeats.push(seat);
             } else if (response === 'selected') {
 
+
             } else if (response.toString() === 'purchased') {
                 seat.disabled = true;
             }

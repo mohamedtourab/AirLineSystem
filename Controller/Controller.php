@@ -6,6 +6,8 @@ require_once('../Model/Model.php');
 class Controller
 {
     var $myModel;
+    var $timeDuration = 120; //in seconds
+
     function __construct($modelData)
     {
         $numberOfColumns = 6;
@@ -27,12 +29,18 @@ class Controller
 
 
     function signUp(){
+
         global $myModel;
 
         if(isset($_POST['userName'])&&isset($_POST['password'])){
             $postUserName = $_POST['userName'];
             $postPassword = $_POST['password'];
             $myModel->insertUser($postUserName,$postPassword);
+            session_start();
+            $_SESSION['LAST_ACTIVITY'] = $_SERVER['REQUEST_TIME'];
+            $_SESSION['CURRENT_USER_NAME'] = $postUserName;
+
+
         }
 
     }
@@ -55,6 +63,9 @@ class Controller
             $row =  mysqli_fetch_assoc($result);
             $retrievedPassword = $row['userPassword'];
             if($retrievedPassword == $postPassword){
+                session_start();
+                $_SESSION['LAST_ACTIVITY'] = $_SERVER['REQUEST_TIME'];
+                $_SESSION['CURRENT_USER_NAME'] = $postUserName;
                 return true;
             }
         }
@@ -64,6 +75,15 @@ class Controller
 
     function checkSelectedSeat(){
         global $myModel;
+        global $timeDuration;
+
+        if (isset($_SESSION['LAST_ACTIVITY']) &&
+            ($_SERVER['REQUEST_TIME'] - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
+            session_unset();
+            session_destroy();
+            return "timeout";
+
+        }
         if(isset($_POST['row']) && isset($_POST['column'])){
             $row = $_POST['row'];
             $column = $_POST['column'];
@@ -81,18 +101,35 @@ class Controller
     }
 
     function reserveSeat(){
-            global $myModel;
-            if(isset($_POST['row']) && isset($_POST['column']) && isset($_POST['reservingUserName']) ){
-                $row = $_POST['row'];
-                $column = $_POST['column'];
-                $reserveingUser = $_POST['reservingUserName'];
-                $myModel->updateSeatState('selected',$reserveingUser,$row,$column);
-            }
+        global $myModel;
+        global $timeDuration;
+        if (isset($_SESSION['LAST_ACTIVITY']) &&
+            ($_SERVER['REQUEST_TIME'] - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
+            session_unset();
+            session_destroy();
+            return "timeout";
+
+        }
+        if(isset($_POST['row']) && isset($_POST['column']) && isset($_POST['reservingUserName']) ){
+            $row = $_POST['row'];
+            $column = $_POST['column'];
+            $reserveingUser = $_POST['reservingUserName'];
+            $myModel->updateSeatState('selected',$reserveingUser,$row,$column);
+        }
 
     }
 
     function purchaseSeat(){
         global $myModel;
+        global $timeDuration;
+        
+        if (isset($_SESSION['LAST_ACTIVITY']) &&
+            ($_SERVER['REQUEST_TIME'] - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
+            session_unset();
+            session_destroy();
+            return "timeout";
+
+        }
         if(isset($_POST['row']) && isset($_POST['column']) && isset($_POST['purchaseUserName']) ){
             $row = $_POST['row'];
             $column = $_POST['column'];
