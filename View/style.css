@@ -70,6 +70,8 @@ label{
     border-bottom: 5px solid #d8d8d8;
     box-sizing: border-box;
 }
+
+/*the curve that simulates the cockpit*/
 .cockpit:before {
     content: "";
     display: block;
@@ -89,6 +91,7 @@ label{
     margin: 100px auto 35px auto;
     box-sizing: border-box;
 }
+
 /*draw the two lines that show the two sides of the plane*/
 .fuselage {
     border-right: 5px solid #d8d8d8;
