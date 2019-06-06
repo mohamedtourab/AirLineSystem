@@ -18,7 +18,6 @@ class Model
         if(!$conn){
             die('failed to connect to MySQL: '.mysqli_connect_error() );
         }
-        echo "Connection successfully";
     }
 
     function select($query){

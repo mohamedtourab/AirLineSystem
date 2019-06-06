@@ -95,7 +95,6 @@ function selectSeat(seat) {
             column: seatColumn
         },
         success: function (response) {
-            document.write(response);
             if (response.toString() === 'free') {
                 selectedSeats.push(seat);
             } else if (response === 'selected') {

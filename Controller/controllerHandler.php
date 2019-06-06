@@ -14,6 +14,8 @@ if(isset($_POST['loginRequest'])){
 
 if(isset($_POST['checkSeatState'])){
     $seatState = $myController->checkSelectedSeat();
+    echo $seatState;
+    exit();
 }
 
 if(isset($_POST['reserveSeatRequest'])){
