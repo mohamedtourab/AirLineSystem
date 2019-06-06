@@ -47,7 +47,7 @@ class Controller
         if(isset($_POST['userName'])&&isset($_POST['password'])){
             $postUserName = $_POST['userName'];
             $postPassword = $_POST['password'];
-            $result = $myModel->select("SELECT * FROM airlinedatabase.Users WHERE userID = $postUserName AND userPassword = $postPassword ");
+            $result = $myModel->select("SELECT * FROM airlinedatabase.Users WHERE userID = '$postUserName'AND userPassword ='$postPassword' ");
             if(!$result){
                 echo "ERROR IN Login";
                 return false;
@@ -67,7 +67,7 @@ class Controller
         if(isset($_POST['row']) && isset($_POST['column'])){
             $row = $_POST['row'];
             $column = $_POST['column'];
-            $result = $myModel->select("SELECT seatState FROM Seats WHERE seatRow = $row AND seatColumn = $column");
+            $result = $myModel->select("SELECT seatState FROM airlinedatabase.Seats WHERE seatRow = '$row' AND seatColumn = '$column'");
             if(!$result){
                 echo "ERROR IN checkSeatState";
                 return false;
@@ -80,7 +80,7 @@ class Controller
 
     }
 
-    function reserveSeart(){
+    function reserveSeat(){
             global $myModel;
             if(isset($_POST['row']) && isset($_POST['column']) && isset($_POST['reservingUserName']) ){
                 $row = $_POST['row'];

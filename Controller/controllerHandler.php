@@ -17,7 +17,7 @@ if(isset($_POST['checkSeatState'])){
 }
 
 if(isset($_POST['reserveSeatRequest'])){
-    $myController->reserveSeart();
+    $myController->reserveSeat();
 }
 
 
