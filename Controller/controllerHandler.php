@@ -32,23 +32,23 @@ if(isset($_POST['checkSeatState'])){
 }
 
 if(isset($_POST['reserveSeatRequest'])){
-    $result = $myController->reserveSeat();
+    $reserveResult = $myController->reserveSeat();
     unset($_POST);
-    echo $result;
+    echo $reserveResult;
     exit();
 }
 
 if(isset($_POST['cancelSeatReservation'])){
-    $result = $myController->cancelSeatReservation();
+    $cancelResult = $myController->cancelSeatReservation();
     unset($_POST);
-    echo $result;
+    echo $cancelResult;
     exit();
 }
 
 if(isset($_POST['purchaseSeatRequest'])){
-    $result = $myController->purchaseSeat();
+    $purchaseResult = $myController->purchaseSeat();
     unset($_POST);
-    echo $result;
+    echo $purchaseResult;
     exit();
 }
 

@@ -39,6 +39,7 @@ function sendSignUpForm(){
 function sendLoginForm() {
     let user_name = document.getElementById("loginUserNameID").value;
     let user_password = document.getElementById("loginPasswordID").value;
+
     if(validateEmail(user_name)){
         $.ajax({
             url: "../Controller/controllerHandler.php",
@@ -167,6 +168,28 @@ function reserveSeatRequest(seat) {
     });
 
 }
+function buySeat() {
+    for(var i=0;i<selectedSeats.length;i++){
+        let regexStr = selectedSeats[i].match(/[a-z]+|[^a-z]+/gi);
+        let seatRow = Number(regexStr[0]);
+        let seatColumn = regexStr[1];
+        $.ajax({
+            url: "../Controller/controllerHandler.php",
+            type: "POST", //send it through post method
+            data: {purchaseSeatRequest: 'yes',row:seatRow,column:seatColumn},
+            dataType:"text",
+            success: function (response) {
+                document.getElementById("welcomeParagraph").innerHTML= response;
+                document.getElementById("welcomeParagraph").style.display = "block";
+            },
+            error: function (xhr) {
+
+                //Do Something to handle error
+            }
+        });
+    }
+}
+
 
 function initSeat(){
     let numberOfColumns = 6;

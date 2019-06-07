@@ -12,8 +12,10 @@ class Controller
         $numberOfRows = 10;
         $char = 'A';
         global $myModel;
-        $myModel = new Model($modelData['userName'],$modelData['password'],$modelData['dbName']);
 
+        if (!$myModel) {
+            $myModel = new Model($modelData['userName'],$modelData['password'],$modelData['dbName']);
+        }
         for($i=0;$i<($numberOfRows);$i++){
             for($j=0;$j<($numberOfColumns);$j++){
                 $myModel->insertSeat(($i+1),$char,'free');
@@ -91,7 +93,7 @@ class Controller
             return 'timeout';
 
         }
-        if(isset($_POST['row']) && isset($_POST['column'])){
+        if(isset($_POST['row']) && isset($_POST['column']) && isset($_SESSION['CURRENT_USER_NAME'])){
             $row = $_POST['row'];
             $column = $_POST['column'];
             $result = $myModel->select("SELECT seatState,holdingUser FROM airlinedatabase.Seats WHERE seatRow = '$row' AND seatColumn = '$column'");
@@ -159,12 +161,13 @@ class Controller
             session_destroy();
             return 'timeout';
         }
-        if(isset($_POST['row']) && isset($_POST['column']) && isset($_POST['purchaseUserName']) ){
+        if(isset($_POST['row']) && isset($_POST['column']) && isset($_SESSION['CURRENT_USER_NAME']) ){
             $row = $_POST['row'];
             $column = $_POST['column'];
-            $purchasingUser = $_POST['purchaseUserName'];
+            $purchasingUser = $_SESSION['CURRENT_USER_NAME'];
             $myModel->updateSeatState('purchased',$purchasingUser,$row,$column);
             $_SESSION['LAST_ACTIVITY'] = time();
+            return "purchased Successfully";
 
         }
 
