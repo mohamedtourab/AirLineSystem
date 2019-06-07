@@ -38,6 +38,12 @@ if(isset($_POST['reserveSeatRequest'])){
     exit();
 }
 
+if(isset($_POST['cancelSeatReservation'])){
+    $result = $myController->cancelSeatReservation();
+    unset($_POST);
+    echo $result;
+    exit();
+}
 
 if(isset($_POST['purchaseSeatRequest'])){
     $result = $myController->purchaseSeat();

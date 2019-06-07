@@ -112,14 +112,29 @@ class Controller
 
 
     }
-
+    function cancelSeatReservation(){
+        session_start();
+        global $myModel;
+        $timeDuration = 120; //in seconds
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
+            $_SESSION=array();
+            session_destroy();
+            return 'timeout';
+        }
+        if(isset($_POST['row']) && isset($_POST['column']) && isset($_SESSION['CURRENT_USER_NAME']) ){
+            $row = $_POST['row'];
+            $column = $_POST['column'];
+            $reservingUser = null;
+            $myModel->updateSeatState('free',$reservingUser,$row,$column);
+            $_SESSION['LAST_ACTIVITY'] = time();
+        }
+    }
     function reserveSeat(){
 
         session_start();
         global $myModel;
         $timeDuration = 120; //in seconds
-        if (isset($_SESSION['LAST_ACTIVITY']) &&
-            (time() - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
             $_SESSION=array();
             session_destroy();
             return 'timeout';

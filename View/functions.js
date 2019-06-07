@@ -98,6 +98,7 @@ function selectSeat(seat) {
 
                 } else if (response.toString() === 'already_selected'){//selected by me that's mean that I want to unselect the seat because I pressed twice
                     seat.checked=false;
+                    cancelSeatReservation(seat);
                     indexOfElementToRemove = selectedSeats.indexOf(seatID);
                     if (indexOfElementToRemove > -1) {
                         selectedSeats.splice(indexOfElementToRemove, 1);
@@ -113,11 +114,31 @@ function selectSeat(seat) {
         }
     });
 }
+function cancelSeatReservation(seat) {
+    let seatID = seat.id;
+    let regexStr = seatID.match(/[a-z]+|[^a-z]+/gi);
+    let seatRow = Number(regexStr[0]);
+    let seatColumn = regexStr[1];
 
+    $.ajax({
+        url: "../Controller/controllerHandler.php",
+        type: "POST", //send it through post method
+        data: {cancelSeatReservation: 'yes',row:seatRow,column:seatColumn},
+        dataType:"text",
+        success: function (response) {
+
+        },
+        error: function (xhr) {
+
+            //Do Something to handle error
+        }
+    });
+}
 function reserveSeatRequest(seat) {
     let seatID = seat.id;
-    let seatRow = Number(seatID.charAt(0));
-    let seatColumn = seatID.charAt(1);
+    let regexStr = seatID.match(/[a-z]+|[^a-z]+/gi);
+    let seatRow = Number(regexStr[0]);
+    let seatColumn = regexStr[1];
 
     $.ajax({
         url: "../Controller/controllerHandler.php",
