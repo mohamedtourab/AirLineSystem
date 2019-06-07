@@ -14,7 +14,7 @@ class Controller
         $numberOfRows = 10;
         $char = 'A';
         global $myModel;
-        $myModel = new Model($modelData['dbuserName'],$modelData['dbpassword'],$modelData['dbName']);
+        $myModel = new Model($modelData['userName'],$modelData['password'],$modelData['dbName']);
 
         for($i=0;$i<($numberOfRows);$i++){
             for($j=0;$j<($numberOfColumns);$j++){
@@ -37,9 +37,9 @@ class Controller
             $postPassword = $_POST['password'];
             unset($_POST);
             $myModel->insertUser($postUserName,$postPassword);
-           /* session_start();
-            $_SESSION['LAST_ACTIVITY'] = $_SERVER['REQUEST_TIME'];
-            $_SESSION['CURRENT_USER_NAME'] = $postUserName;*/
+            /* session_start();
+             $_SESSION['LAST_ACTIVITY'] = $_SERVER['REQUEST_TIME'];
+             $_SESSION['CURRENT_USER_NAME'] = $postUserName;*/
             return $postUserName;
         }
 
@@ -57,12 +57,11 @@ class Controller
             $postPassword = $_POST['password'];
             unset($_POST);
             $result = $myModel->select("SELECT userPassword FROM airlinedatabase.Users WHERE userID = '$postUserName'");
-            if(!$result){
+            if($result == null){
                 return 'ERROR IN Login';
             }
             $row =  mysqli_fetch_assoc($result);
             $retrievedPassword = $row['userPassword'];
-            return $retrievedPassword;
             if($retrievedPassword == $postPassword){
                 /*session_start();
                 $_SESSION['LAST_ACTIVITY'] = $_SERVER['REQUEST_TIME'];

@@ -8,55 +8,58 @@ function showSignUpForm() {
 }
 
 function sendSignUpForm(){
-    $.ajax({
-        url: "../Controller/controllerHandler.php",
-        type: "POST", //send it through post method
-        data: {
-            signUpRequest: 'yes',
-            userName: document.getElementById("signUpUserNameID").value,
-            password: document.getElementById("signUpPasswordID").value
-        },
-        dataType:'text',
-        success: function (response) {
-            document.getElementById("formSignUp").style.display="none";
-            document.getElementById("formLogin").style.display="none";
-            document.getElementById("buyID").style.display="block";
-            document.getElementById("updateID").style.display="block";
-            document.getElementById("welcomeParagraph").innerHTML="Welcome "+response+" to our Airline company";
-            document.getElementById("welcomeParagraph").style.display = "block";
+    let user_name = document.getElementById("signUpUserNameID").value;
+    let user_password = document.getElementById("signUpPasswordID").value;
+    if(validateEmail(user_name)){
+        $.ajax({
+            url: "../Controller/controllerHandler.php",
 
-        },
-        error: function (xhr) {
-            document.write("Error while signup");
-        }
-    });
+            type: "POST", //send it through post method
+            data: {signUpRequest: 'yes', userName: user_name, password: user_password},
+            dataType:"text",
+            success: function (response) {
+                document.getElementById("formSignUp").style.display="none";
+                document.getElementById("formLogin").style.display="none";
+                document.getElementById("buyID").style.display="block";
+                document.getElementById("updateID").style.display="block";
+                document.getElementById("welcomeParagraph").innerHTML="Welcome "+response+" to our Airline company";
+                document.getElementById("welcomeParagraph").style.display = "block";
 
+            },
+            error: function (xhr) {
+                document.write("Error while signup");
+            }
+        });
+    }
+    else {
 
+    }
 }
 function sendLoginForm() {
+    let user_name = document.getElementById("loginUserNameID").value;
+    let user_password = document.getElementById("loginPasswordID").value;
+    if(validateEmail(user_name)){
+        $.ajax({
+            url: "../Controller/controllerHandler.php",
+            type: "POST", //send it through post method
+            data: {loginRequest: 'yes', userName: user_name, password: user_password},
+            dataType:"text",
+            success: function (response) {
+                document.write("Hello from login "+response);
+                /* document.getElementById("formSignUp").style.display="none";
+                 document.getElementById("formLogin").style.display="none";
+                 document.getElementById("buyID").style.display="block";
+                 document.getElementById("updateID").style.display="block";
+                 document.getElementById("welcomeParagraph").innerHTML="Welcome "+response+" to our Airline company";
+                 document.getElementById("welcomeParagraph").style.display = "block";*/
+            },
+            error: function (xhr) {
 
-    $.ajax({
-        url: "../Controller/controllerHandler.php",
-        type: "POST", //send it through post method
-        data: {
-            loginRequest: 'yes',
-            userName: document.getElementById("loginUserNameID").value,
-            password: document.getElementById("loginPasswordID").value
-        },
-        dataType:'text',
-        success: function (response) {
-            document.getElementById("formSignUp").style.display="none";
-            document.getElementById("formLogin").style.display="none";
-            document.getElementById("buyID").style.display="block";
-            document.getElementById("updateID").style.display="block";
-            document.getElementById("welcomeParagraph").innerHTML="Welcome "+response+" to our Airline company";
-            document.getElementById("welcomeParagraph").style.display = "block";
-        },
-        error: function (xhr) {
+                //Do Something to handle error
+            }
+        });
+    }
 
-            //Do Something to handle error
-        }
-    });
 }
 
 
@@ -100,7 +103,6 @@ function selectSeat(seat) {
     var seatID = seat.id;
     var seatRow = Number(seatID.charAt(0));
     var seatColumn = seatID.charAt(1);
-
     $.ajax({
         url: "../Controller/controllerHandler.php",
         type: "POST", //send it through post method
@@ -130,6 +132,9 @@ function selectSeat(seat) {
             //Do Something to handle error
         }
     });
+}
 
-
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
 }

@@ -84,7 +84,7 @@ html {
 /*the curve that simulates the cockpit*/
 .cockpit:before {
     content: "";
-   /* display: block;*/
+    /* display: block;*/
     position: absolute;
     top: 0;
     left: 0;

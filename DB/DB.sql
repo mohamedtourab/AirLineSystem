@@ -23,8 +23,8 @@ CONSTRAINT RC_seat PRIMARY KEY (seatRow,seatColumn)
 );
 
 -- Insert rows into table 'TableName'
-INSERT INTO Users(userID, userPassword) VALUES('mohamedmamdouh','1234');
-INSERT INTO Users(userID, userPassword) VALUES('mamdouhtourab','78910');
+INSERT INTO Users(userID, userPassword) VALUES('u1@p.it','1234');
+INSERT INTO Users(userID, userPassword) VALUES('u2@p.it','1234');
 
 /*INSERT INTO Seats(seatRow, seatColumn,seatState) VALUES('1','A','free');
 INSERT INTO Seats(seatRow, seatColumn,seatState) VALUES('2','A','free');

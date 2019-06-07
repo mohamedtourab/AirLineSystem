@@ -1,7 +1,7 @@
 <?php
 require_once 'Controller.php';
 
-$modelData=array("dbuserName"=>"mohamed", "dbpassword"=>"mohamed", "dbName"=>"airlinedatabase");
+$modelData=array("userName"=>"mohamed", "password"=>"mohamed", "dbName"=>"airlinedatabase");
 $myController = new Controller($modelData);
 
 if(isset($_POST['signUpRequest'])){
@@ -30,9 +30,9 @@ if(isset($_POST['reserveSeatRequest'])){
 
 
 if(isset($_POST['purchaseSeatRequest'])){
-   $result = $myController->purchaseSeat();
-   echo $result;
-   exit();
+    $result = $myController->purchaseSeat();
+    echo $result;
+    exit();
 }
 
 ?>
