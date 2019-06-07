@@ -1,11 +1,15 @@
 function showLoginForm() {
     document.getElementById("formSignUp").style.display="none";
     document.getElementById("formLogin").style.display="block";
+    document.getElementById("welcomeParagraph").style.display="none";
+
 }
 function showSignUpForm() {
     document.getElementById("formSignUp").style.display="block";
     document.getElementById("formLogin").style.display="none";
+    document.getElementById("welcomeParagraph").style.display="none";
 }
+
 var selectedSeats =[];
 
 
@@ -28,7 +32,7 @@ function sendSignUpForm(){
         });
     }
     else {
-
+        window.alert("Enter a valid Email");
     }
 }
 
@@ -41,13 +45,21 @@ function sendLoginForm() {
             type: "POST", //send it through post method
             data: {loginRequest: 'yes', userName: user_name, password: user_password},
             dataType:"text",
-            success: function (response) {
-                loggedinResponse(response);
+            success: function (response) { //logged in correctly
+                if(response.toString()=== user_name.toString()){
+                    loggedinResponse(response);
+                }
+                else { //failed to log in
+                    loginFailedResponse();
+                }
             },
             error: function (xhr) {
                 document.write("Error while login");
             }
         });
+    }
+    else {
+        window.alert("Enter a valid Email");
     }
 }
 
@@ -218,5 +230,16 @@ function loggedinResponse(response){
     document.getElementById("buyID").style.display="block";
     document.getElementById("updateID").style.display="block";
     document.getElementById("welcomeParagraph").innerHTML="Welcome "+response+" to our Airline company";
+    document.getElementById("welcomeParagraph").style.display = "block";
+}
+function loginFailedResponse(){
+    document.getElementById("formSignUp").style.display="none";
+    document.getElementById("formLogin").style.display="none";
+    document.getElementById("signUpA").style.display="block";
+    document.getElementById("loginA").style.display="block";
+    document.getElementById("logoutID").style.display = "none";
+    document.getElementById("buyID").style.display="none";
+    document.getElementById("updateID").style.display="none";
+    document.getElementById("welcomeParagraph").innerHTML = "Wrong username or password please try again. ";
     document.getElementById("welcomeParagraph").style.display = "block";
 }
