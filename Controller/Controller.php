@@ -103,12 +103,12 @@ class Controller
             $value = mysqli_fetch_assoc($result);
             $retrievedState = $value['seatState'];
             $currentHoldingUser = $value['holdingUser'];
-            $_SESSION['LAST_ACTIVITY'] = time();
             if($retrievedState=='selected'){
                 if($_SESSION['CURRENT_USER_NAME'] == $currentHoldingUser){
                     $retrievedState= 'already_selected';
                 }
             }
+            $_SESSION['LAST_ACTIVITY'] = time();
             return $retrievedState;
         }
 

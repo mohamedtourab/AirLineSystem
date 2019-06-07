@@ -189,7 +189,9 @@ function buySeat() {
         });
     }
 }
-
+function updateView(){
+    
+}
 
 function initSeat(){
     let numberOfColumns = 6;
