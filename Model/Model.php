@@ -24,7 +24,7 @@ class Model
         global $conn;
         $result = mysqli_query($conn,$query);
         if(!$result){
-            die("Error in SELECT query: ".mysqli_error());
+            die("Error in SELECT query: ".mysqli_error($conn));
         }
         return $result;
     }
@@ -33,7 +33,7 @@ class Model
         global $conn;
         $stmt = mysqli_prepare($conn,"INSERT INTO airlinedatabase.Users VALUES(?,?);");
         if(!$stmt){
-            die("Error during INSERT:".mysqli_error());
+            die("Error during INSERT:".mysqli_error($conn));
         }
         mysqli_stmt_bind_param($stmt,"ss",$userName,$myPassword);
         mysqli_stmt_execute($stmt);
@@ -45,7 +45,7 @@ class Model
         global $conn;
         $stmt = mysqli_prepare($conn,"INSERT INTO airlinedatabase.Seats(seatRow,seatColumn,seatState) VALUES(?,?,?);");
         if(!$stmt){
-            die("Error during INSERT Seat:".mysqli_error());
+            die("Error during INSERT Seat:".mysqli_error($conn));
         }
         mysqli_stmt_bind_param($stmt,"iss",$seat_row,$seat_column,$seat_state);
         mysqli_stmt_execute($stmt);
@@ -56,10 +56,10 @@ class Model
         $stmt1 = mysqli_prepare($conn,"UPDATE airlinedatabase.Seats SET seatState = ? WHERE seatRow = ? and seatColumn = ? ");
         $stmt2 = mysqli_prepare($conn,"UPDATE airlinedatabase.Seats SET holdingUser = ? WHERE seatRow = ? and seatColumn = ? ");
         if(!$stmt1){
-            die("Error during UPDATE Seat state:".mysqli_error());
+            die("Error during UPDATE Seat state:".mysqli_error($conn));
         }
         if(!$stmt2){
-            die("Error during UPDATE holding user:".mysqli_error());
+            die("Error during UPDATE holding user:".mysqli_error($conn));
         }
         mysqli_stmt_bind_param($stmt1,"sis",$seat_state,$row,$column);
         mysqli_stmt_bind_param($stmt2,"sis",$holding_user,$row,$column);

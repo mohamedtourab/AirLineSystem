@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8" http-equiv="Cache-control" content="no-cache">
     <title>AirLine Ticket Reservation</title>
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="functions.js"></script>
@@ -34,7 +34,7 @@
             <input id="signUpPasswordID" name="password" type="password"  style="font-size: 12pt; width: 400px" required>
 
             <br><br>
-            <input type="submit" value="Sign up" name="signUpButton" style="font-size: 15px" onclick="sendSignUpForm()">
+            <input type="button" value="Sign up" name="signUpButton" style="font-size: 15px" onclick="sendSignUpForm()">
         </form>
 
 
@@ -49,17 +49,18 @@
             <input id="loginPasswordID" name="password" type="password"  style="font-size: 12pt; width: 400px" required>
 
             <br><br>
-            <input type="submit" value="Login" name="loginButton" style="font-size: 15px" onclick="sendLoginForm()">
+            <input type="button" value="Login" name="loginButton" style="font-size: 15px" onclick="sendLoginForm()">
         </form>
 
     </div>
 </div>
 
 <div class="sidenav">
-    <a class="show_form"  onclick="showSignUpForm()">Sign up</a>
-    <a class="show_form"  onclick="showLoginForm()">Login</a>
-    <a class="show_form" id="buyID">Buy</a>
-    <a class="show_form" id="updateID" >Update</a>
+    <a class="show_form" id="signUpA"  onclick="showSignUpForm()">Sign up<br></a>
+    <a class="show_form" id="loginA" onclick="showLoginForm()">Login<br></a>
+    <a class="show_form" id="buyID">Buy<br></a>
+    <a class="show_form" id="updateID" >Update<br></a>
+    <a class="show_form" id="logoutID" onclick="sendLogoutRequest()" >Log Out</a>
 </div>
 
 <div class="plane">
