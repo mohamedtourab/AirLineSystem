@@ -146,10 +146,12 @@ ol {
     box-sizing: border-box;
 }
 /*checked+label means that the style will be applied for the checked button and its label*/
+/*
 .seat input[type=checkbox]:checked + label {
     background: yellow;
     box-sizing: border-box;
 }
+*/
 
 .seat input[type=checkbox]:disabled + label {
     background: red;

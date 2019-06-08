@@ -200,7 +200,8 @@ class Controller
         if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
             $_SESSION=array();
             session_destroy();
-            return 'timeout';
+            array_push($myArray,['timeoutRespone'=>'timeout']);
+            return json_encode($myArray);
         }
 
         $result = $myModel->select("SELECT * FROM airlinedatabase.Seats");

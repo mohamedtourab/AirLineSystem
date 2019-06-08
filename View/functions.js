@@ -23,6 +23,7 @@ function sendSignUpForm(){
             dataType:"text",
             success: function (response) {
                 loggedinResponse(response);
+                localStorage.setItem("email", response);
             },
             error: function (xhr) {
                 document.write("Error while signup");
@@ -47,6 +48,7 @@ function sendLoginForm() {
             success: function (response) { //logged in correctly
                 if(response.toString()=== user_name.toString()){
                     loggedinResponse(response);
+                    localStorage.setItem("email", response);
                 }
                 else { //failed to log in
                     loginFailedResponse();
@@ -71,7 +73,7 @@ function sendLogoutRequest() {
         success: function (response) {
             console.log(response);
             if(response.toString() === 'Done'){
-                logOutSuccessesResponse();
+                logOutSuccessesResponse()
             }
         },
         error: function (xhr) {
@@ -95,18 +97,20 @@ function selectSeat(seat) {
         dataType:'text',
         success: function (response) {
             if(response.toString() === 'timeout'){
-                logOutSuccessesResponse();
+                timeOutRespone();
             }
             else {
                 if (response.toString() === 'free') {
-
+                    document.getElementById((seatID+'L')).style.backgroundColor="yellow";
                 } else if (response.toString() === 'selected') {//selected but not by me
-
+                    document.getElementById((seatID+'L')).style.backgroundColor="yellow";
                 } else if (response.toString() === 'already_selected'){//selected by me that's mean that I want to unselect the seat because I pressed twice
                     seat.checked=false;
-
+                    document.getElementById((seatID+'L')).style.backgroundColor="green";
                 } else if (response.toString() === 'purchased') {
                     seat.disabled = true;
+                    document.getElementById((seatID+'L')).style.backgroundColor="red";
+
                 }
             }
 
@@ -123,6 +127,9 @@ function buySeat() {
             data: {purchaseSeatRequest: 'yes'},
             dataType:"text",
             success: function (response) {
+                if(response.toString() === 'timeout'){
+                    timeOutRespone();
+                }
                 document.getElementById("welcomeParagraph").innerHTML= response;
                 document.getElementById("welcomeParagraph").style.display = "block";
                 updateView();
@@ -134,6 +141,16 @@ function buySeat() {
         });
 }
 function updateView(){
+
+    let timeOutR;
+    //This part to handle the web browser refresh to keep the welcome message appear to the user
+    const userId = localStorage.getItem("email");
+    if (userId && userId !== undefined) {
+        loggedinResponse(userId);
+    }
+    else {
+        welcomingRespone();
+    }
     let seatID;
     let color;
     $.ajax({
@@ -142,22 +159,31 @@ function updateView(){
         data: {updateView: 'yes'},
         dataType:'json',
         success: function (JSONObject) {
-            for (var key in JSONObject) {
+
+            for (let key in JSONObject) {
                 if (JSONObject.hasOwnProperty(key)){
+                    timeOutR = JSONObject[key]['timeoutRespone'];
+                    if(timeOutR=='timeout'){
+                        timeOutRespone();
+                        break;
+                    }
                    color = JSONObject[key]['color'];
                    seatID = JSONObject[key]['seatID'];
-                   console.log(color);
                    if(color == 'Green'){
                        document.getElementById(seatID).checked = false;
+                       document.getElementById((seatID+'L')).style.backgroundColor="green";
                    }
                    else if (color == 'Red'){
                        document.getElementById(seatID).disabled = true;
+                       document.getElementById((seatID+'L')).style.backgroundColor="red";
                    }
                    else if(color == 'Yellow'){
                        document.getElementById(seatID).checked = true;
+                       document.getElementById((seatID+'L')).style.backgroundColor="yellow";
                    }
                    else if(color == 'Orange'){
                        document.getElementById(seatID).checked = true;
+                       document.getElementById((seatID+'L')).style.backgroundColor="orange";
                    }
                 }
             }
@@ -197,6 +223,7 @@ function initSeat(){
             innerItemList.appendChild(inputElement);
             let labelElement = document.createElement("label");
             labelElement.setAttribute("for",currentId);
+            labelElement.setAttribute("id",currentId+'L');
             let textElement = document.createTextNode(currentId.toString());
             labelElement.appendChild(textElement);
             innerItemList.appendChild(labelElement);
@@ -220,6 +247,8 @@ function logOutSuccessesResponse() {
     document.getElementById("updateID").style.display="none";
     document.getElementById("welcomeParagraph").innerHTML = "You are logged out !";
     document.getElementById("welcomeParagraph").style.display = "block";
+    console.log(localStorage.getItem("email"));
+    localStorage.clear();
 }
 
 function loggedinResponse(response){
@@ -243,4 +272,29 @@ function loginFailedResponse(){
     document.getElementById("updateID").style.display="none";
     document.getElementById("welcomeParagraph").innerHTML = "Wrong username or password please try again. ";
     document.getElementById("welcomeParagraph").style.display = "block";
+}
+function welcomingRespone(){
+    document.getElementById("formSignUp").style.display="none";
+    document.getElementById("formLogin").style.display="none";
+    document.getElementById("signUpA").style.display="block";
+    document.getElementById("loginA").style.display="block";
+    document.getElementById("logoutID").style.display = "none";
+    document.getElementById("buyID").style.display="none";
+    document.getElementById("updateID").style.display="none";
+    document.getElementById("welcomeParagraph").innerHTML = "Please Login or Sign up to start buying seats.";
+    document.getElementById("welcomeParagraph").style.display = "block";
+    console.log(localStorage.getItem("email"));
+}
+function timeOutRespone() {
+    document.getElementById("formSignUp").style.display="none";
+    document.getElementById("formLogin").style.display="none";
+    document.getElementById("signUpA").style.display="block";
+    document.getElementById("loginA").style.display="block";
+    document.getElementById("logoutID").style.display = "none";
+    document.getElementById("buyID").style.display="none";
+    document.getElementById("updateID").style.display="none";
+    document.getElementById("welcomeParagraph").innerHTML = "You are logged out for timeout.";
+    document.getElementById("welcomeParagraph").style.display = "block";
+    console.log(localStorage.getItem("email"));
+    localStorage.clear();
 }
