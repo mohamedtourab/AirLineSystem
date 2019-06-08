@@ -1,7 +1,6 @@
 CREATE DATABASE IF NOT EXISTS airlinedatabase;
 USE airlinedatabase;
 
-drop user 'mohamed'@'localhost';
 flush privileges;
 
 CREATE USER 'mohamed'@'localhost' IDENTIFIED BY 'mohamed';

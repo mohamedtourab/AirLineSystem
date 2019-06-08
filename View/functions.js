@@ -10,8 +10,6 @@ function showSignUpForm() {
     document.getElementById("welcomeParagraph").style.display="none";
 }
 
-var selectedSeats =[];
-
 
 function sendSignUpForm(){
     let user_name = document.getElementById("signUpUserNameID").value;
@@ -101,21 +99,12 @@ function selectSeat(seat) {
             }
             else {
                 if (response.toString() === 'free') {
-                    selectedSeats.push(seatID);
-                    console.log(selectedSeats);
-                    reserveSeatRequest(seat);
 
                 } else if (response.toString() === 'selected') {//selected but not by me
-                    selectedSeats.push(seatID);
-                    reserveSeatRequest(seat);
 
                 } else if (response.toString() === 'already_selected'){//selected by me that's mean that I want to unselect the seat because I pressed twice
                     seat.checked=false;
-                    cancelSeatReservation(seat);
-                    indexOfElementToRemove = selectedSeats.indexOf(seatID);
-                    if (indexOfElementToRemove > -1) {
-                        selectedSeats.splice(indexOfElementToRemove, 1);
-                    }
+
                 } else if (response.toString() === 'purchased') {
                     seat.disabled = true;
                 }
@@ -127,56 +116,11 @@ function selectSeat(seat) {
         }
     });
 }
-function cancelSeatReservation(seat) {
-    let seatID = seat.id;
-    let regexStr = seatID.match(/[a-z]+|[^a-z]+/gi);
-    let seatRow = Number(regexStr[0]);
-    let seatColumn = regexStr[1];
-
-    $.ajax({
-        url: "../Controller/controllerHandler.php",
-        type: "POST", //send it through post method
-        data: {cancelSeatReservation: 'yes',row:seatRow,column:seatColumn},
-        dataType:"text",
-        success: function (response) {
-
-        },
-        error: function (xhr) {
-
-            //Do Something to handle error
-        }
-    });
-}
-function reserveSeatRequest(seat) {
-    let seatID = seat.id;
-    let regexStr = seatID.match(/[a-z]+|[^a-z]+/gi);
-    let seatRow = Number(regexStr[0]);
-    let seatColumn = regexStr[1];
-
-    $.ajax({
-        url: "../Controller/controllerHandler.php",
-        type: "POST", //send it through post method
-        data: {reserveSeatRequest: 'yes',row:seatRow,column:seatColumn},
-        dataType:"text",
-        success: function (response) {
-
-        },
-        error: function (xhr) {
-
-            //Do Something to handle error
-        }
-    });
-
-}
 function buySeat() {
-    for(var i=0;i<selectedSeats.length;i++){
-        let regexStr = selectedSeats[i].match(/[a-z]+|[^a-z]+/gi);
-        let seatRow = Number(regexStr[0]);
-        let seatColumn = regexStr[1];
         $.ajax({
             url: "../Controller/controllerHandler.php",
             type: "POST", //send it through post method
-            data: {purchaseSeatRequest: 'yes',row:seatRow,column:seatColumn},
+            data: {purchaseSeatRequest: 'yes'},
             dataType:"text",
             success: function (response) {
                 document.getElementById("welcomeParagraph").innerHTML= response;
@@ -187,10 +131,9 @@ function buySeat() {
                 //Do Something to handle error
             }
         });
-    }
 }
 function updateView(){
-    
+
 }
 
 function initSeat(){
