@@ -11,6 +11,7 @@ function showSignUpForm() {
 }
 
 
+
 function sendSignUpForm(){
     let user_name = document.getElementById("signUpUserNameID").value;
     let user_password = document.getElementById("signUpPasswordID").value;
@@ -22,9 +23,14 @@ function sendSignUpForm(){
             data: {signUpRequest: 'yes', userName: user_name, password: user_password},
             dataType:"text",
             success: function (response) {
-                loggedinResponse(response);
-                localStorage.setItem("email", response);
-                updateView();
+                if(response == 'AlreadyTaken'){
+                    duplicateEmail();
+                }
+                else {
+                    loggedinResponse(response);
+                    localStorage.setItem("email", response);
+                    updateView();
+                }
             },
             error: function (xhr) {
                 document.write("Error while signup");
@@ -35,6 +41,9 @@ function sendSignUpForm(){
         window.alert("Enter a valid Email");
     }
 }
+
+
+
 
 function sendLoginForm() {
     let user_name = document.getElementById("loginUserNameID").value;
@@ -77,7 +86,6 @@ function sendLogoutRequest() {
             console.log(response);
             if(response.toString() === 'Done'){
                 logOutSuccessesResponse();
-                updateView();
             }
         },
         error: function (xhr) {
@@ -152,6 +160,7 @@ function updateView(){
         loggedinResponse(userId);
     }
     else {
+        //TODO this may make problem when you refresh the page
         welcomingRespone();
     }
     let seatID;
@@ -301,3 +310,18 @@ function timeOutRespone() {
     console.log(localStorage.getItem("email"));
     localStorage.clear();
 }
+
+
+function duplicateEmail() {
+    document.getElementById("formSignUp").style.display="block";
+    document.getElementById("formLogin").style.display="none";
+    document.getElementById("signUpA").style.display="block";
+    document.getElementById("loginA").style.display="block";
+    document.getElementById("logoutID").style.display = "none";
+    document.getElementById("buyID").style.display="none";
+    document.getElementById("updateID").style.display="none";
+    document.getElementById("welcomeParagraph").innerHTML = "Email is already taken.";
+    document.getElementById("welcomeParagraph").style.display = "block";
+    localStorage.clear();
+}
+

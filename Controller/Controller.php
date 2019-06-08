@@ -1,7 +1,7 @@
 <?php
 require_once('../Model/Model.php');
 
-
+// TODO add after each wrong response session termination if needed
 class Controller
 {
     var $myModel;
@@ -28,6 +28,8 @@ class Controller
     }
 
 
+
+
     function signUp(){
 
         session_start();
@@ -36,13 +38,20 @@ class Controller
         if(isset($_POST['userName'])&&isset($_POST['password'])){
             $postUserName = $_POST['userName'];
             $postPassword = $_POST['password'];
+            $result = $myModel->select("SELECT * FROM airlinedatabase.Users WHERE userID = '$postUserName'");
+            if(mysqli_num_rows($result)>0){
+                $_SESSION=array();
+                session_destroy();
+                return 'AlreadyTaken';
+            }
             $myModel->insertUser($postUserName,$postPassword);
-             $_SESSION['LAST_ACTIVITY'] = time();
-             $_SESSION['CURRENT_USER_NAME'] = $postUserName;
+            $_SESSION['LAST_ACTIVITY'] = time();
+            $_SESSION['CURRENT_USER_NAME'] = $postUserName;
             return $postUserName;
         }
 
     }
+
 
 
     /**

@@ -26,6 +26,11 @@ html {
     text-align: left;
     display: none;
 }
+
+.input-style{
+    margin: 10px;
+}
+
 #formSignUp{
     margin-top: 30px;
     margin-left: 170px;
@@ -69,7 +74,7 @@ html {
 
 
 .plane {
-    margin: 20px auto;
+    margin: 21px 20px 20px 600px;
     max-width: 300px;
     box-sizing: border-box;
 }

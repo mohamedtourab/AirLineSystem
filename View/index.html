@@ -24,32 +24,59 @@
     <div id="divForm">
 
         <form id="formSignUp" name="signUpForm" method="post">
-
-            <label for="signUpUserNameID"><b><span style="font-size: 20px">UserID</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input id="signUpUserNameID" name="userName" type="email" style="font-size: 12pt; width: 400px" required>
-
-            <br><br>
-
-            <label for="signUpPasswordID"><b><span style="font-size: 20px">Password</span>&nbsp;</b></label>
-            <input id="signUpPasswordID" name="password" type="password"  style="font-size: 12pt; width: 400px" required>
-
-            <br><br>
-            <input type="button" value="Sign up" name="signUpButton" style="font-size: 15px" onclick="sendSignUpForm()">
+            <div>
+                <div class="row input-style">
+                    <div class="col-md-6">
+                        <label for="signUpUserNameID">
+                            <span style="font-size: 20px">Email</span>
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="signUpUserNameID" name="userName" type="email" style="font-size: 12pt; width: 400px" required>
+                    </div>
+                </div>
+                <div class="row input-style">
+                    <div class="col-md-6">
+                        <label for="signUpPasswordID">
+                            <span style="font-size: 20px">Password</span>
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="signUpPasswordID" name="password" type="password" style="font-size: 12pt; width: 400px" required>
+                    </div>
+                </div>
+                <div class="row input-style">
+                    <input type="button" value="Sign up" name="signUpButton" style="font-size: 15px" onclick="sendSignUpForm()">
+                </div>
+            </div>
         </form>
 
-
         <form id="formLogin" name="loginForm" method="post">
-
-            <label for="loginUserNameID"><b><span style="font-size: 20px">UserID</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input id="loginUserNameID" name="userName" type="email" style="font-size: 12pt; width: 400px" required>
-
-            <br><br>
-
-            <label for="loginPasswordID"><b><span style="font-size: 20px">Password</span>&nbsp;</b></label>
-            <input id="loginPasswordID" name="password" type="password"  style="font-size: 12pt; width: 400px" required>
-
-            <br><br>
-            <input type="button" value="Login" name="loginButton" style="font-size: 15px" onclick="sendLoginForm()">
+            <div>
+                <div class="row input-style">
+                    <div class="col-md-6">
+                        <label for="signUpUserNameID">
+                            <span style="font-size: 20px">Email</span>
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="loginUserNameID" name="userName" type="email" style="font-size: 12pt; width: 400px" required>
+                    </div>
+                </div>
+                <div class="row input-style">
+                    <div class="col-md-6">
+                        <label for="signUpPasswordID">
+                            <span style="font-size: 20px">Password</span>
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="loginPasswordID" name="password" type="password" style="font-size: 12pt; width: 400px" required>
+                    </div>
+                </div>
+                <div class="row input-style">
+                    <input type="button" value="Login" name="loginButton" style="font-size: 15px" onclick="sendLoginForm()">
+                </div>
+            </div>
         </form>
 
     </div>
