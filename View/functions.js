@@ -24,6 +24,7 @@ function sendSignUpForm(){
             success: function (response) {
                 loggedinResponse(response);
                 localStorage.setItem("email", response);
+                updateView();
             },
             error: function (xhr) {
                 document.write("Error while signup");
@@ -49,6 +50,7 @@ function sendLoginForm() {
                 if(response.toString()=== user_name.toString()){
                     loggedinResponse(response);
                     localStorage.setItem("email", response);
+                    updateView();
                 }
                 else { //failed to log in
                     loginFailedResponse();
@@ -65,6 +67,7 @@ function sendLoginForm() {
 }
 
 function sendLogoutRequest() {
+
     $.ajax({
         url: "../Controller/controllerHandler.php",
         type: "POST", //send it through post method
@@ -73,11 +76,11 @@ function sendLogoutRequest() {
         success: function (response) {
             console.log(response);
             if(response.toString() === 'Done'){
-                logOutSuccessesResponse()
+                logOutSuccessesResponse();
+                updateView();
             }
         },
         error: function (xhr) {
-
             //Do Something to handle error
         }
     });

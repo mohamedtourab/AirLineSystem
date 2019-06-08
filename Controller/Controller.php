@@ -75,6 +75,14 @@ class Controller
 
     function logout(){
         session_start();
+        if(isset($_SESSION['CURRENT_USER_NAME']) && isset($_SESSION['selectedSeats'])){
+            foreach( $_SESSION['selectedSeats'] as $seat ) {
+                $arr = preg_split('/(?<=[0-9])(?=[a-z]+)/i',$seat);
+                $row = $arr[0];
+                $column = $arr[1];
+                $this->cancelSeatReservation($row,$column);
+            }
+        }
         $_SESSION=array();
         session_destroy();
         return 'Done';
