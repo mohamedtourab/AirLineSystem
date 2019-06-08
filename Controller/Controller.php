@@ -7,6 +7,7 @@ class Controller
     var $myModel;
     function __construct($modelData)
     {
+
         $numberOfColumns = 6;
         $numberOfRows = 10;
         $char = 'A';
@@ -14,13 +15,13 @@ class Controller
 
         if (!$myModel) {
             $myModel = new Model($modelData['userName'],$modelData['password'],$modelData['dbName']);
-        }
-        for($i=0;$i<($numberOfRows);$i++){
-            for($j=0;$j<($numberOfColumns);$j++){
-                $myModel->insertSeat(($i+1),$char,'free');
-                $char++;
-                if($j==$numberOfColumns-1){
-                    $char='A';
+            for($i=0;$i<($numberOfRows);$i++){
+                for($j=0;$j<($numberOfColumns);$j++){
+                    $myModel->insertSeat(($i+1),$char,'free');
+                    $char++;
+                    if($j==$numberOfColumns-1){
+                        $char='A';
+                    }
                 }
             }
         }
@@ -83,16 +84,16 @@ class Controller
         session_start();
         global $myModel;
         $timeDuration = 120; //in seconds
-        //create an array for seats
-        if(!isset($_SESSION['selectedSeats'])){
-            $_SESSION['selectedSeats'] = array();
-        }
 
         if (isset($_SESSION['LAST_ACTIVITY']) && ((time() -$_SESSION['LAST_ACTIVITY']) > $timeDuration )) {
             $_SESSION=array();
             unset($_SESSION);
             session_destroy();
             return 'timeout';
+        }
+        //create an array for seats
+        if(!isset($_SESSION['selectedSeats'])){
+            $_SESSION['selectedSeats'] = array();
         }
 
         if(isset($_POST['row']) && isset($_POST['column']) && isset($_SESSION['CURRENT_USER_NAME'])){
@@ -130,17 +131,10 @@ class Controller
                 array_push($_SESSION['selectedSeats'],$seatID);
             }
             $_SESSION['LAST_ACTIVITY'] = time();
-            /*for($x = 0; $x < count($_SESSION['selectedSeats']); $x++) {
-                echo count($_SESSION['selectedSeats']);
-                echo "<br>";
-                echo $_SESSION['selectedSeats'][$x];
-                echo "<br>";
-            }*/
             return $retrievedState;
         }
-
-
     }
+
     function cancelSeatReservation($row,$column){
         global $myModel;;
         $timeDuration = 120; //in seconds
@@ -195,6 +189,47 @@ class Controller
 
         }
 
+    }
+
+    function updateView(){
+        session_start();
+        global $myModel;
+        $timeDuration = 120; //in seconds
+        $myArray = array();
+
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
+            $_SESSION=array();
+            session_destroy();
+            return 'timeout';
+        }
+
+        $result = $myModel->select("SELECT * FROM airlinedatabase.Seats");
+        if(!$result){
+            return 'ERROR IN checkSeatState';
+        }
+        while($row = mysqli_fetch_assoc($result)){
+            $seatID = $row['seatRow'].$row['seatColumn'];
+
+            if($row['seatState']=='purchased'){
+
+                array_push($myArray,['seatID'=>$seatID,'color'=>'Red']);
+            }
+            else if($row['seatState']=='free') {
+
+                array_push($myArray,['seatID'=>$seatID,'color'=>'Green']);
+            }
+            else{
+                if( isset($_SESSION['CURRENT_USER_NAME']) && $row['holdingUser']==$_SESSION['CURRENT_USER_NAME']){
+
+                    array_push($myArray,['seatID'=>$seatID,'color'=>'Yellow']);
+                }
+                else{
+
+                    array_push($myArray,['seatID'=>$seatID,'color'=>'Orange']);
+                }
+            }
+        }
+        return json_encode($myArray);
     }
 
 }

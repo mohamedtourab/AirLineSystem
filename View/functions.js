@@ -125,6 +125,7 @@ function buySeat() {
             success: function (response) {
                 document.getElementById("welcomeParagraph").innerHTML= response;
                 document.getElementById("welcomeParagraph").style.display = "block";
+                updateView();
             },
             error: function (xhr) {
 
@@ -133,7 +134,39 @@ function buySeat() {
         });
 }
 function updateView(){
+    let seatID;
+    let color;
+    $.ajax({
+        url: "../Controller/controllerHandler.php",
+        type: "POST", //send it through post method
+        data: {updateView: 'yes'},
+        dataType:'json',
+        success: function (JSONObject) {
+            for (var key in JSONObject) {
+                if (JSONObject.hasOwnProperty(key)){
+                   color = JSONObject[key]['color'];
+                   seatID = JSONObject[key]['seatID'];
+                   console.log(color);
+                   if(color == 'Green'){
+                       document.getElementById(seatID).checked = false;
+                   }
+                   else if (color == 'Red'){
+                       document.getElementById(seatID).disabled = true;
+                   }
+                   else if(color == 'Yellow'){
+                       document.getElementById(seatID).checked = true;
+                   }
+                   else if(color == 'Orange'){
+                       document.getElementById(seatID).checked = true;
+                   }
+                }
+            }
+        },
+        error: function (xhr) {
 
+            //Do Something to handle error
+        }
+    });
 }
 
 function initSeat(){
@@ -169,7 +202,7 @@ function initSeat(){
             innerItemList.appendChild(labelElement);
         }
     }
-
+    updateView();
 }
 
 

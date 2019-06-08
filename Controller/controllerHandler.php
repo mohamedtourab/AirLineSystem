@@ -36,3 +36,10 @@ if(isset($_POST['purchaseSeatRequest'])){
     echo $purchaseResult;
     exit();
 }
+
+if(isset($_POST['updateView'])){
+    $updateResult = $myController->updateView();
+    unset($_POST);
+    echo $updateResult;
+    exit();
+}
