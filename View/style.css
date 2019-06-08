@@ -48,7 +48,7 @@ html {
 .sidenav {
     height:100%;
     width: 160px;
-    position: fixed;
+    position: absolute;
     top: 100px;
     left: 0;
     background-color: #ffe5cd;
@@ -139,7 +139,7 @@ ol {
     margin-right: 14.28571428571429%;
 }
 
-/*remove the box that I check by click on it*/
+/*remove the appearance of the checkbox*/
 .seat input[type=checkbox] {
     position: absolute;
     opacity: 0;

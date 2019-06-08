@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c8a1c42-08d0-465d-ae95-204be99253fe" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Controller/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/functions.js" beforeDir="false" afterPath="$PROJECT_DIR$/View/functions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/controllerHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/controllerHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/View/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/View/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/View/style.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -40,8 +40,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/View/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="61" column="60" selection-start-line="61" selection-start-column="60" selection-end-line="61" selection-end-column="60" />
+            <state relative-caret-position="510">
+              <caret line="70" column="16" lean-forward="true" selection-start-line="70" selection-start-column="16" selection-end-line="70" selection-end-column="16" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#b#0;n#label#1;n#form#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -49,30 +52,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/View/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="161" column="24" lean-forward="true" selection-start-line="161" selection-start-column="24" selection-end-line="161" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/View/functions.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="283" column="107" selection-start-line="283" selection-start-column="107" selection-end-line="283" selection-end-column="107" />
-              <folding>
-                <element signature="n#!!block;n#showLoginForm#0" />
-                <element signature="n#!!block;n#showSignUpForm#0" />
-              </folding>
+            <state relative-caret-position="-187">
+              <caret line="141" column="39" selection-start-line="141" selection-start-column="39" selection-end-line="141" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/View/functions.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="26" selection-start-column="26" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Controller/controllerHandler.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="515">
-              <caret line="42" column="22" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+            <state relative-caret-position="1173">
+              <caret line="73" selection-start-line="73" selection-end-line="73" />
             </state>
           </provider>
         </entry>
@@ -80,7 +79,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controller/Controller.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5">
+            <state relative-caret-position="549">
               <caret line="188" lean-forward="true" selection-start-line="188" selection-end-line="188" />
             </state>
           </provider>
@@ -155,11 +154,11 @@
         <option value="$PROJECT_DIR$/View/View.html" />
         <option value="$PROJECT_DIR$/Model/Model.php" />
         <option value="$PROJECT_DIR$/DB/DB.sql" />
+        <option value="$PROJECT_DIR$/Controller/Controller.php" />
         <option value="$PROJECT_DIR$/Controller/controllerHandler.php" />
         <option value="$PROJECT_DIR$/View/index.html" />
-        <option value="$PROJECT_DIR$/View/style.css" />
-        <option value="$PROJECT_DIR$/Controller/Controller.php" />
         <option value="$PROJECT_DIR$/View/functions.js" />
+        <option value="$PROJECT_DIR$/View/style.css" />
       </list>
     </option>
   </component>
@@ -288,12 +287,12 @@
       <workItem from="1559931382770" duration="309000" />
       <workItem from="1559931785886" duration="26475000" />
       <workItem from="1559993670543" duration="5095000" />
-      <workItem from="1560001192815" duration="14491000" />
+      <workItem from="1560001192815" duration="17327000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="170264000" />
+    <option name="totallyTimeSpent" value="173100000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -460,20 +459,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="61" column="60" selection-start-line="61" selection-start-column="60" selection-end-line="61" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="161" column="24" lean-forward="true" selection-start-line="161" selection-start-column="24" selection-end-line="161" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Model/Model.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
@@ -483,26 +468,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Controller/Controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5">
+        <state relative-caret-position="549">
           <caret line="188" lean-forward="true" selection-start-line="188" selection-end-line="188" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Controller/controllerHandler.php">
+    <entry file="file://$PROJECT_DIR$/View/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="42" column="22" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+        <state relative-caret-position="510">
+          <caret line="70" column="16" lean-forward="true" selection-start-line="70" selection-start-column="16" selection-end-line="70" selection-end-column="16" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#b#0;n#label#1;n#form#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/View/functions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="283" column="107" selection-start-line="283" selection-start-column="107" selection-end-line="283" selection-end-column="107" />
-          <folding>
-            <element signature="n#!!block;n#showLoginForm#0" />
-            <element signature="n#!!block;n#showSignUpForm#0" />
-          </folding>
+        <state>
+          <caret column="26" selection-start-column="26" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-187">
+          <caret line="141" column="39" selection-start-line="141" selection-start-column="39" selection-end-line="141" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controller/controllerHandler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1173">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
         </state>
       </provider>
     </entry>
