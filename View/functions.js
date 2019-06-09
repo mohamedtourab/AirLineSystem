@@ -172,8 +172,13 @@ function buySeat() {
                 if(response.toString() === 'timeout'){
                     timeOutRespone();
                 }
-                else if(response == 'purchased Successfully'){
-                    document.getElementById("welcomeParagraph").innerHTML= response;
+                else if(response == 'Purchased Successfully'){
+                    document.getElementById("welcomeParagraph").innerHTML= response+".";
+                    document.getElementById("welcomeParagraph").style.display = "block";
+                    document.getElementById("buyID").style.display="none";
+                }
+                else if(response == 'Purchase Failed'){
+                    document.getElementById("welcomeParagraph").innerHTML= response+" some seats are not available anymore."+ "<br>"+"Please Select another seats";
                     document.getElementById("welcomeParagraph").style.display = "block";
                     document.getElementById("buyID").style.display="none";
                 }

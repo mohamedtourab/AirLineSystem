@@ -181,6 +181,12 @@ class Controller
         session_start();
         global $myModel;
         $timeDuration = 120; //in seconds
+        $returnResult = "Purchased Successfully";
+
+        //create an array for seats
+        if(!isset($_SESSION['purchasedSeats'])){
+            $_SESSION['purchasedSeats'] = array();
+        }
 
         if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
             $_SESSION=array();
@@ -192,11 +198,37 @@ class Controller
                 $arr = preg_split('/(?<=[0-9])(?=[a-z]+)/i',$seat);
                 $row = $arr[0];
                 $column = $arr[1];
+                $seatID = $row.$column;
                 $purchasingUser = $_SESSION['CURRENT_USER_NAME'];
-                $myModel->updateSeatState('purchased',$purchasingUser,$row,$column);
+                //check that the user selected this seat is me before buying it
+                $result = $myModel->select("SELECT seatState FROM airlinedatabase.Seats WHERE holdingUser = '$purchasingUser' AND seatRow ='$row' AND seatColumn='$column'");
+
+                if(mysqli_num_rows($result)>0){ //if the seat holding user is me the seatState will be returned from the query and then I buy it
+                    $myModel->updateSeatState('purchased',$purchasingUser,$row,$column);
+                    array_push($_SESSION['purchasedSeats'],$seatID);
+                }
+                else{// nothing returned this means someone else selected the seat so I should cancel the buy and free all the seats
+                    $returnResult = "Purchase Failed";
+                    foreach( $_SESSION['purchasedSeats'] as $seat2 ) {
+                        $arr2 = preg_split('/(?<=[0-9])(?=[a-z]+)/i',$seat2);
+                        $row2 = $arr2[0];
+                        $column2 = $arr2[1];
+                        $this->cancelSeatReservation($row2,$column2);
+                    }
+                    $_SESSION['purchasedSeats'] = array();
+                    $_SESSION['selectedSeats'] = array();
+                    $_SESSION['LAST_ACTIVITY'] = time();
+                    return $returnResult;
+                }
+
+            }
+            //Empty the purchased seats and selected seats
+            if($returnResult == "Purchased Successfully" && isset($_SESSION['purchasedSeats']) && isset($_SESSION['selectedSeats'])){
+                $_SESSION['selectedSeats'] = array();
+                $_SESSION['purchasedSeats'] = array();
             }
             $_SESSION['LAST_ACTIVITY'] = time();
-            return "purchased Successfully";
+            return $returnResult;
 
         }
 
