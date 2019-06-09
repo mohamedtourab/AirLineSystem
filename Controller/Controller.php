@@ -109,6 +109,7 @@ class Controller
         $timeDuration = 120; //in seconds
 
         if (isset($_SESSION['LAST_ACTIVITY']) && ((time() -$_SESSION['LAST_ACTIVITY']) > $timeDuration )) {
+            $this->seatCancellationTimeOut();
             $_SESSION=array();
             session_destroy();
             return 'timeout';
@@ -157,6 +158,16 @@ class Controller
         }
     }
 
+    function seatCancellationTimeOut(){
+        if(isset($_SESSION['CURRENT_USER_NAME']) && isset($_SESSION['selectedSeats'])){
+            foreach( $_SESSION['selectedSeats'] as $seat ) {
+                $arr = preg_split('/(?<=[0-9])(?=[a-z]+)/i',$seat);
+                $row = $arr[0];
+                $column = $arr[1];
+                $this->cancelSeatReservation($row,$column);
+            }
+        }
+    }
     function cancelSeatReservation($row,$column){
         global $myModel;;
 
@@ -183,16 +194,18 @@ class Controller
         $timeDuration = 120; //in seconds
         $returnResult = "Purchased Successfully";
 
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
+            $this->seatCancellationTimeOut();
+            $_SESSION=array();
+            session_destroy();
+            return 'timeout';
+        }
+
         //create an array for seats
         if(!isset($_SESSION['purchasedSeats'])){
             $_SESSION['purchasedSeats'] = array();
         }
 
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
-            $_SESSION=array();
-            session_destroy();
-            return 'timeout';
-        }
         if(isset($_SESSION['CURRENT_USER_NAME']) && isset($_SESSION['selectedSeats'])){
             foreach( $_SESSION['selectedSeats'] as $seat ) {
                 $arr = preg_split('/(?<=[0-9])(?=[a-z]+)/i',$seat);
@@ -241,6 +254,7 @@ class Controller
         $myArray = array();
 
         if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
+            $this->seatCancellationTimeOut();
             $_SESSION=array();
             session_destroy();
             array_push($myArray,['timeoutRespone'=>'timeout']);

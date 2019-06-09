@@ -1,3 +1,6 @@
+var selectedSeats = [];
+
+
 function showLoginForm() {
     document.getElementById("formSignUp").style.display="none";
     document.getElementById("formLogin").style.display="block";
@@ -86,6 +89,7 @@ function sendLogoutRequest() {
             console.log(response);
             if(response.toString() === 'Done'){
                 logOutSuccessesResponse();
+                updateView();
             }
         },
         error: function (xhr) {
@@ -93,7 +97,7 @@ function sendLogoutRequest() {
         }
     });
 }
-var selectedSeats = [];
+
 function selectSeat(seat) {
     let seatID = seat.id;
     let regexStr = seatID.match(/[a-z]+|[^a-z]+/gi);
@@ -108,6 +112,8 @@ function selectSeat(seat) {
         success: function (response) {
             if(response.toString() === 'timeout'){
                 timeOutRespone();
+                selectedSeats = [];
+                updateView();
             }
             else {
                 if (response.toString() === 'free') {
@@ -171,16 +177,19 @@ function buySeat() {
             success: function (response) {
                 if(response.toString() === 'timeout'){
                     timeOutRespone();
+                    selectedSeats = [];
                 }
                 else if(response == 'Purchased Successfully'){
                     document.getElementById("welcomeParagraph").innerHTML= response+".";
                     document.getElementById("welcomeParagraph").style.display = "block";
                     document.getElementById("buyID").style.display="none";
+                    selectedSeats = [];
                 }
                 else if(response == 'Purchase Failed'){
                     document.getElementById("welcomeParagraph").innerHTML= response+" some seats are not available anymore."+ "<br>"+"Please Select another seats";
                     document.getElementById("welcomeParagraph").style.display = "block";
                     document.getElementById("buyID").style.display="none";
+                    selectedSeats=[];
                 }
 
                 updateView();
@@ -208,6 +217,7 @@ function updateView(){
                     timeOutR = JSONObject[key]['timeoutRespone'];
                     if(timeOutR=='timeout'){
                         timeOutRespone();
+                        selectedSeats = [];
                         break;
                     }
                    color = JSONObject[key]['color'];
