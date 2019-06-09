@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="functions.js"></script>
     <script src="jquery.min.js"></script>
-
+<script>
+    //The rest of the document gets interpreted as part of the script tag, and because the script isn't text/javascript, it gets ignored.
+    if (!(navigator.cookieEnabled)){
+        document.write('<script type="text/undefined">');
+        alert("Cookies are disabled.\nPlease enable cookies and try again");
+    }
+</script>
 </head>
 
 <body id="BodyId">
@@ -33,7 +39,7 @@
                         </label>
                     </div>
                     <div class="col-md-6">
-                        <input id="signUpUserNameID" name="userName" type="email" style="font-size: 12pt; width: 400px"
+                        <input id="signUpUserNameID" name="userName" placeholder="Enter Email here" title="Enter Email here" type="email" style="font-size: 12pt; width: 400px"
                                required>
                     </div>
                 </div>
@@ -44,7 +50,7 @@
                         </label>
                     </div>
                     <div class="col-md-6">
-                        <input id="signUpPasswordID" name="password" type="password"
+                        <input id="signUpPasswordID" placeholder="Enter password here" title="Enter password here" name="password" type="password"
                                style="font-size: 12pt; width: 400px" required>
                     </div>
                 </div>
@@ -64,7 +70,7 @@
                         </label>
                     </div>
                     <div class="col-md-6">
-                        <input id="loginUserNameID" name="userName" type="email" style="font-size: 12pt; width: 400px"
+                        <input id="loginUserNameID" name="userName" placeholder="Enter Email here" title="Enter Email here" type="email" style="font-size: 12pt; width: 400px"
                                required>
                     </div>
                 </div>
@@ -75,7 +81,7 @@
                         </label>
                     </div>
                     <div class="col-md-6">
-                        <input id="loginPasswordID" name="password" type="password"
+                        <input id="loginPasswordID" placeholder="Enter password here" title="Enter password here" name="password" type="password"
                                style="font-size: 12pt; width: 400px" required>
                     </div>
                 </div>

@@ -1,3 +1,4 @@
+//TODO implement the statistics for the plane
 var selectedSeats = [];
 
 
@@ -18,7 +19,14 @@ function showSignUpForm() {
 function sendSignUpForm() {
     let user_name = document.getElementById("signUpUserNameID").value;
     let user_password = document.getElementById("signUpPasswordID").value;
+
+    let passwordRegex =  new RegExp("(?=.*[a-z])((?=.*\\d*[A-Z]+)|(?=.*[A-Z]*\\d+))[0-9a-zA-Z]{2,}");
+    if(! passwordRegex.test(user_password)){
+        window.alert("Incorrect password please try again.\nPassword must contain at least:\n1-One lowercase letter.\n2- One uppercase letter or a number.");
+
+    }
     if (validateEmail(user_name)) {
+
         $.ajax({
             url: "../Controller/controllerHandler.php",
 
@@ -47,7 +55,10 @@ function sendSignUpForm() {
 function sendLoginForm() {
     let user_name = document.getElementById("loginUserNameID").value;
     let user_password = document.getElementById("loginPasswordID").value;
-
+    let passwordRegex =  new RegExp("(?=.*[a-z])((?=.*\\d*[A-Z]+)|(?=.*[A-Z]*\\d+))[0-9a-zA-Z]{2,}");
+    if(! passwordRegex.test(user_password)){
+        window.alert("Incorrect password please try again.\nPassword must contain at least:\n1-One lowercase letter.\n2- One uppercase letter or a number.");
+    }
     if (validateEmail(user_name)) {
         $.ajax({
             url: "../Controller/controllerHandler.php",
@@ -112,6 +123,7 @@ function selectSeat(seat) {
                 if (response.toString() === 'free') {
                     document.getElementById((seatID + 'L')).style.backgroundColor = "yellow";
                     selectedSeats.push(seatID);
+                    alert("You have selected a seat");
                     if (selectedSeats.length > 0) {
                         document.getElementById("buyID").style.display = "block";
                     } else {
@@ -120,13 +132,14 @@ function selectSeat(seat) {
                 } else if (response.toString() === 'selected') {//selected but not by me
                     document.getElementById((seatID + 'L')).style.backgroundColor = "yellow";
                     selectedSeats.push(seatID);
+                    alert("You have selected a seat");
                     if (selectedSeats.length > 0) {
                         document.getElementById("buyID").style.display = "block";
                     } else {
                         document.getElementById("buyID").style.display = "none";
                     }
                 } else if (response.toString() === 'already_selected') {//selected by me that's mean that I want to unselect the seat because I pressed twice
-
+                    alert("You have deselected a seat");
                     seat.checked = false;
                     document.getElementById((seatID + 'L')).style.backgroundColor = "green";
                     let index = selectedSeats.indexOf(seatID);
