@@ -36,9 +36,11 @@ class Controller
         global $myModel;
 
         if(isset($_POST['userName'])&&isset($_POST['password'])){
+
             $postUserName = $_POST['userName'];
             $postPassword = $_POST['password'];
             $result = $myModel->select("SELECT * FROM airlinedatabase.Users WHERE userID = '$postUserName'");
+
             if(mysqli_num_rows($result)>0){
                 $_SESSION=array();
                 session_destroy();
@@ -67,6 +69,8 @@ class Controller
             $postPassword = $_POST['password'];
             $result = $myModel->select("SELECT userPassword FROM airlinedatabase.Users WHERE userID = '$postUserName'");
             if($result == null){
+                $_SESSION=array();
+                session_destroy();
                 return 'ERROR IN Login';
             }
             $row =  mysqli_fetch_assoc($result);
@@ -77,6 +81,8 @@ class Controller
                 return $postUserName;
             }
             else{
+                $_SESSION=array();
+                session_destroy();
                 return 'wrong';
             }
         }
@@ -104,7 +110,6 @@ class Controller
 
         if (isset($_SESSION['LAST_ACTIVITY']) && ((time() -$_SESSION['LAST_ACTIVITY']) > $timeDuration )) {
             $_SESSION=array();
-            unset($_SESSION);
             session_destroy();
             return 'timeout';
         }
@@ -154,12 +159,7 @@ class Controller
 
     function cancelSeatReservation($row,$column){
         global $myModel;;
-        $timeDuration = 120; //in seconds
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
-            $_SESSION=array();
-            session_destroy();
-            return 'timeout';
-        }
+
         if(isset($_SESSION['CURRENT_USER_NAME'])){
             $reservingUser = null;
             $myModel->updateSeatState('free',$reservingUser,$row,$column);
@@ -169,12 +169,6 @@ class Controller
 
     function reserveSeat($row,$column){
         global $myModel;
-        $timeDuration = 120; //in seconds
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeDuration) {
-            $_SESSION=array();
-            session_destroy();
-            return 'timeout';
-        }
         if(isset($_SESSION['CURRENT_USER_NAME']) ){
             $reservingUser = $_SESSION['CURRENT_USER_NAME'];
             $myModel->updateSeatState('selected',$reservingUser,$row,$column);
@@ -247,6 +241,7 @@ class Controller
                 }
             }
         }
+        $_SESSION['LAST_ACTIVITY'] = time();
         return json_encode($myArray);
     }
 
