@@ -1,17 +1,22 @@
-* { margin: 0; }
+* {
+    margin: 0;
+}
+
 html {
     font-size: 16px;
     box-sizing: border-box;
     background-color: lightgoldenrodyellow;
 }
-#Title{
+
+#Title {
     font-size: 65px;
     background-color: darkslategrey;
     text-align: center;
     height: 100px;
     color: White;
 }
-#welcomeParagraph{
+
+#welcomeParagraph {
     font-size: 30px;
     text-align: center;
     margin-top: 30px;
@@ -20,38 +25,43 @@ html {
 }
 
 
-#formLogin{
+#formLogin {
     margin-top: 30px;
     margin-left: 170px;
     text-align: left;
     display: none;
 }
 
-.input-style{
+.input-style {
     margin: 10px;
 }
 
-#formSignUp{
+#formSignUp {
     margin-top: 30px;
     margin-left: 170px;
     text-align: left;
     display: none;
 }
-.pageTitle{
+
+.pageTitle {
     text-align: center;
     box-sizing: border-box;
 }
-#buyID{
+
+#buyID {
     display: none;
 }
-#updateID{
+
+#updateID {
     display: none;
 }
-#logoutID{
+
+#logoutID {
     display: none;
 }
+
 .sidenav {
-    height:100%;
+    height: 100%;
     width: 160px;
     position: absolute;
     top: 100px;
@@ -115,6 +125,7 @@ html {
     border-left: 5px solid #d8d8d8;
     box-sizing: border-box;
 }
+
 /*remove the numbers of the ordered list*/
 ol {
     list-style: none;
@@ -136,7 +147,7 @@ ol {
     flex: 0 0 14.28571428571429%;
     padding: 5px;
     position: relative;
-    box-sizing: border-box;/*it makes all of the boxes between the borders*/
+    box-sizing: border-box; /*it makes all of the boxes between the borders*/
 }
 
 /*put a margin between each 3 seats */
@@ -150,18 +161,12 @@ ol {
     opacity: 0;
     box-sizing: border-box;
 }
-/*checked+label means that the style will be applied for the checked button and its label*/
-/*
-.seat input[type=checkbox]:checked + label {
-    background: yellow;
-    box-sizing: border-box;
-}
-*/
 
 .seat input[type=checkbox]:disabled + label {
     background: red;
     overflow: hidden;
 }
+
 .seat input[type=checkbox]:disabled + label:hover {
     box-shadow: none;
     cursor: not-allowed;
