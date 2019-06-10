@@ -211,6 +211,9 @@ function updateView() {
     let timeOutR;
     let seatID;
     let color;
+    let freeNumber=0;
+    let selectedNumber=0;
+    let purchasedNumber=0;
     $.ajax({
         url: "../Controller/controllerHandler.php",
         type: "POST", //send it through post method
@@ -231,15 +234,19 @@ function updateView() {
                     if (color == 'Green') {
                         document.getElementById(seatID).checked = false;
                         document.getElementById((seatID + 'L')).style.backgroundColor = "green";
+                        freeNumber++;
                     } else if (color == 'Red') {
                         document.getElementById(seatID).disabled = true;
                         document.getElementById((seatID + 'L')).style.backgroundColor = "red";
+                        purchasedNumber++;
                     } else if (color == 'Yellow') {
                         document.getElementById(seatID).checked = true;
                         document.getElementById((seatID + 'L')).style.backgroundColor = "yellow";
+                        selectedNumber++;
                     } else if (color == 'Orange') {
                         document.getElementById(seatID).checked = true;
                         document.getElementById((seatID + 'L')).style.backgroundColor = "orange";
+                        selectedNumber++;
                     }
                 }
             }
