@@ -25,6 +25,8 @@ class Controller
                     }
                 }
             }
+            $myModel->insertUser('u1@p.it',password_hash('p1',PASSWORD_DEFAULT));
+            $myModel->insertUser('u2@p.it',password_hash('p2',PASSWORD_DEFAULT));
         }
     }
 
@@ -46,7 +48,8 @@ class Controller
                 session_destroy();
                 return 'AlreadyTaken';
             }
-            $myModel->insertUser($postUserName, $postPassword);
+            $hashedPassword = password_hash($postPassword,PASSWORD_DEFAULT);
+            $myModel->insertUser($postUserName, $hashedPassword);
             $_SESSION['LAST_ACTIVITY'] = time();
             $_SESSION['CURRENT_USER_NAME'] = $postUserName;
             return $postUserName;
@@ -68,21 +71,26 @@ class Controller
             $postUserName = $_POST['userName'];
             $postPassword = $_POST['password'];
             $result = $myModel->select("SELECT userPassword FROM airlinedatabase.Users WHERE userID = '$postUserName'");
-            if ($result == null) {
+            if (!$result) {
                 $_SESSION = array();
                 session_destroy();
                 return 'ERROR IN Login';
             }
-            $row = mysqli_fetch_assoc($result);
-            $retrievedPassword = $row['userPassword'];
-            if ($retrievedPassword == $postPassword) {
-                $_SESSION['LAST_ACTIVITY'] = time();
-                $_SESSION['CURRENT_USER_NAME'] = $postUserName;
-                return $postUserName;
-            } else {
-                $_SESSION = array();
-                session_destroy();
-                return 'wrong';
+            if(mysqli_num_rows($result)>0){
+                $row = mysqli_fetch_assoc($result);
+                $retrievedPassword = $row['userPassword'];
+                if (password_verify($postPassword,$retrievedPassword)) {
+                    $_SESSION['LAST_ACTIVITY'] = time();
+                    $_SESSION['CURRENT_USER_NAME'] = $postUserName;
+                    return $postUserName;
+                } else {
+                    $_SESSION = array();
+                    session_destroy();
+                    return 'wrong';
+                }
+            }
+            else{
+                return "wrong";
             }
         }
     }

@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS airlinedatabase;
 USE airlinedatabase;
 
-drop user 'mohamed'@'localhost';
+drop user if exists 'mohamed'@'localhost';
 flush privileges;
 
 CREATE USER 'mohamed'@'localhost' IDENTIFIED BY 'mohamed';
@@ -23,8 +23,9 @@ CREATE TABLE IF NOT EXISTS Seats
     holdingUser varchar(255),
     CONSTRAINT RC_seat PRIMARY KEY (seatRow, seatColumn)
 );
-
+/*
 INSERT INTO Users(userID, userPassword)
 VALUES ('u1@p.it', 'p1');
 INSERT INTO Users(userID, userPassword)
 VALUES ('u2@p.it', 'p2');
+*/
