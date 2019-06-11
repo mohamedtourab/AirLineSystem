@@ -20,8 +20,8 @@ function sendSignUpForm() {
     let user_name = document.getElementById("signUpUserNameID").value;
     let user_password = document.getElementById("signUpPasswordID").value;
 
-    let passwordRegex =  new RegExp("(?=.*[a-z])((?=.*\\d*[A-Z]+)|(?=.*[A-Z]*\\d+))[0-9a-zA-Z]{2,}");
-    if(! passwordRegex.test(user_password)){
+    let passwordRegex = new RegExp("(?=.*[a-z])((?=.*\\d*[A-Z]+)|(?=.*[A-Z]*\\d+))[0-9a-zA-Z]{2,}");
+    if (!passwordRegex.test(user_password)) {
         window.alert("Incorrect password please try again.\nPassword must contain at least:\n1-One lowercase letter.\n2- One uppercase letter or a number.");
 
     }
@@ -55,8 +55,8 @@ function sendSignUpForm() {
 function sendLoginForm() {
     let user_name = document.getElementById("loginUserNameID").value;
     let user_password = document.getElementById("loginPasswordID").value;
-    let passwordRegex =  new RegExp("(?=.*[a-z])((?=.*\\d*[A-Z]+)|(?=.*[A-Z]*\\d+))[0-9a-zA-Z]{2,}");
-    if(! passwordRegex.test(user_password)){
+    let passwordRegex = new RegExp("(?=.*[a-z])((?=.*\\d*[A-Z]+)|(?=.*[A-Z]*\\d+))[0-9a-zA-Z]{2,}");
+    if (!passwordRegex.test(user_password)) {
         window.alert("Incorrect password please try again.\nPassword must contain at least:\n1-One lowercase letter.\n2- One uppercase letter or a number.");
     }
     if (validateEmail(user_name)) {
@@ -211,9 +211,9 @@ function updateView() {
     let timeOutR;
     let seatID;
     let color;
-    let freeNumber=0;
-    let selectedNumber=0;
-    let purchasedNumber=0;
+    let freeNumber = 0;
+    let selectedNumber = 0;
+    let purchasedNumber = 0;
     $.ajax({
         url: "../Controller/controllerHandler.php",
         type: "POST", //send it through post method
@@ -250,6 +250,10 @@ function updateView() {
                     }
                 }
             }
+            document.getElementById("totalSeats").innerHTML = "Total: " + (Number(freeNumber) + Number(purchasedNumber) + Number(selectedNumber));
+            document.getElementById("freeSeats").innerHTML = "Free: " + freeNumber;
+            document.getElementById("selectedSeats").innerHTML = "Selected: " + selectedNumber;
+            document.getElementById("purchasedSeats").innerHTML = "Purchased: " + purchasedNumber;
         },
         error: function (xhr) {
 
@@ -259,6 +263,7 @@ function updateView() {
 }
 
 function initSeat() {
+
     //This part to handle the web browser refresh to keep the welcome message appear to the user
     const userId = localStorage.getItem("email");
     if (userId && userId !== undefined) {
@@ -267,41 +272,57 @@ function initSeat() {
         //TODO this may make problem when you refresh the page
         welcomingRespone();
     }
-    let numberOfColumns = 6;
-    let numberOfRows = 10;
-    let orderedList = document.getElementById("cabin");
+    $.ajax({
+        url: "../Controller/controllerHandler.php",
+        type: "POST", //send it through post method
+        data: {getPlaneInfo: 'yes'},
+        dataType: "text",
+        success: function (response) {
+            let numberOfRows;
+            let numberOfColumns;
+            let Arr = response.toString().split("_");
+            numberOfRows = Arr[0];
+            numberOfColumns = Arr[1];
+            let orderedList = document.getElementById("cabin");
 
-    for (let i = 0; i < numberOfRows; i++) {
-        let string = "row row--".concat((Number(i) + Number(1)).toString());
-        let rowItemList = document.createElement("li");
-        rowItemList.setAttribute("class", string);
-        orderedList.appendChild(rowItemList);
-        let innerOrderedList = document.createElement("ol");
-        innerOrderedList.setAttribute("class", "seats");
-        innerOrderedList.setAttribute("type", "A");
-        rowItemList.appendChild(innerOrderedList);
+            for (let i = 0; i < numberOfRows; i++) {
+                let string = "row row--".concat((Number(i) + Number(1)).toString());
+                let rowItemList = document.createElement("li");
+                rowItemList.setAttribute("class", string);
+                orderedList.appendChild(rowItemList);
+                let innerOrderedList = document.createElement("ol");
+                innerOrderedList.setAttribute("class", "seats");
+                innerOrderedList.setAttribute("type", "A");
+                rowItemList.appendChild(innerOrderedList);
 
-        for (let j = 0; j < numberOfColumns; j++) {
-            let innerItemList = document.createElement("li");
-            innerItemList.setAttribute("class", "seat");
-            innerOrderedList.appendChild(innerItemList);
-            let inputElement = document.createElement("input");
-            inputElement.setAttribute("type", "checkbox");
-            let currentChar = String.fromCharCode("A".charCodeAt(0) + Number(j));
-            let currentId = ((Number(i) + Number(1)) + currentChar).toString();
-            inputElement.setAttribute("id", currentId);
-            inputElement.setAttribute("onclick", "selectSeat(this)");
-            innerItemList.appendChild(inputElement);
-            let labelElement = document.createElement("label");
-            labelElement.setAttribute("for", currentId);
-            labelElement.setAttribute("id", currentId + 'L');
-            let textElement = document.createTextNode(currentId.toString());
-            labelElement.appendChild(textElement);
-            innerItemList.appendChild(labelElement);
+                for (let j = 0; j < numberOfColumns; j++) {
+                    let innerItemList = document.createElement("li");
+                    innerItemList.setAttribute("class", "seat");
+                    innerOrderedList.appendChild(innerItemList);
+                    let inputElement = document.createElement("input");
+                    inputElement.setAttribute("type", "checkbox");
+                    let currentChar = String.fromCharCode("A".charCodeAt(0) + Number(j));
+                    let currentId = ((Number(i) + Number(1)) + currentChar).toString();
+                    inputElement.setAttribute("id", currentId);
+                    inputElement.setAttribute("onclick", "selectSeat(this)");
+                    innerItemList.appendChild(inputElement);
+                    let labelElement = document.createElement("label");
+                    labelElement.setAttribute("for", currentId);
+                    labelElement.setAttribute("id", currentId + 'L');
+                    let textElement = document.createTextNode(currentId.toString());
+                    labelElement.appendChild(textElement);
+                    innerItemList.appendChild(labelElement);
+                }
+            }
+
+            updateView();
+        },
+        error: function (xhr) {
+
+            //Do Something to handle error
         }
-    }
+    });
 
-    updateView();
 }
 
 

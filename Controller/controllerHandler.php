@@ -12,7 +12,8 @@ $functionsCorrespondingToRequest = array(
     'logoOutRequest' => 'logout',
     'checkSeatState' => 'checkSelectedSeat',
     'purchaseSeatRequest' => 'purchaseSeat',
-    'updateView' => 'updateView'
+    'updateView' => 'updateView',
+    'getPlaneInfo'=>'sendPlaneData'
 );
 
 foreach ($functionsCorrespondingToRequest as $request => $function) {

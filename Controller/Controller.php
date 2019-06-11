@@ -11,6 +11,10 @@ class Controller
 
         $numberOfColumns = 6;
         $numberOfRows = 10;
+        if (!(isset($_POST['numberOfColumns']) && isset($_POST['numberOfRows']))) {
+            $_POST['numberOfColumns'] = $numberOfColumns;
+            $_POST['numberOfRows'] = $numberOfRows;
+        }
         $char = 'A';
         global $myModel;
 
@@ -25,8 +29,8 @@ class Controller
                     }
                 }
             }
-            $myModel->insertUser('u1@p.it',password_hash('p1',PASSWORD_DEFAULT));
-            $myModel->insertUser('u2@p.it',password_hash('p2',PASSWORD_DEFAULT));
+            $myModel->insertUser('u1@p.it', password_hash('p1', PASSWORD_DEFAULT));
+            $myModel->insertUser('u2@p.it', password_hash('p2', PASSWORD_DEFAULT));
         }
     }
 
@@ -48,7 +52,7 @@ class Controller
                 session_destroy();
                 return 'AlreadyTaken';
             }
-            $hashedPassword = password_hash($postPassword,PASSWORD_DEFAULT);
+            $hashedPassword = password_hash($postPassword, PASSWORD_DEFAULT);
             $myModel->insertUser($postUserName, $hashedPassword);
             $_SESSION['LAST_ACTIVITY'] = time();
             $_SESSION['CURRENT_USER_NAME'] = $postUserName;
@@ -76,10 +80,10 @@ class Controller
                 session_destroy();
                 return 'ERROR IN Login';
             }
-            if(mysqli_num_rows($result)>0){
+            if (mysqli_num_rows($result) > 0) {
                 $row = mysqli_fetch_assoc($result);
                 $retrievedPassword = $row['userPassword'];
-                if (password_verify($postPassword,$retrievedPassword)) {
+                if (password_verify($postPassword, $retrievedPassword)) {
                     $_SESSION['LAST_ACTIVITY'] = time();
                     $_SESSION['CURRENT_USER_NAME'] = $postUserName;
                     return $postUserName;
@@ -88,8 +92,7 @@ class Controller
                     session_destroy();
                     return 'wrong';
                 }
-            }
-            else{
+            } else {
                 return "wrong";
             }
         }
@@ -197,6 +200,18 @@ class Controller
             $_SESSION['LAST_ACTIVITY'] = time();
         }
     }
+
+    function sendPlaneData()
+    {
+        if (isset($_POST['getPlaneInfo'])) {
+            if (isset($_POST['numberOfColumns']) && isset($_POST['numberOfRows'])) {
+
+                return $_POST['numberOfRows'] . "_" . $_POST['numberOfColumns'];
+            }
+        }
+
+    }
+
 
     function purchaseSeat()
     {
