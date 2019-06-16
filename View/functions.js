@@ -341,7 +341,6 @@ function logOutSuccessesResponse() {
     document.getElementById("updateID").style.display = "none";
     document.getElementById("welcomeParagraph").innerHTML = "You are logged out !";
     document.getElementById("welcomeParagraph").style.display = "block";
-    console.log(localStorage.getItem("email"));
     localStorage.clear();
 }
 
@@ -377,7 +376,6 @@ function welcomingRespone() {
     document.getElementById("updateID").style.display = "none";
     document.getElementById("welcomeParagraph").innerHTML = "Please Login or Sign up to start buying seats.";
     document.getElementById("welcomeParagraph").style.display = "block";
-    console.log(localStorage.getItem("email"));
 }
 
 function timeOutRespone() {
@@ -390,7 +388,6 @@ function timeOutRespone() {
     document.getElementById("updateID").style.display = "none";
     document.getElementById("welcomeParagraph").innerHTML = "You are logged out for timeout.";
     document.getElementById("welcomeParagraph").style.display = "block";
-    console.log(localStorage.getItem("email"));
     localStorage.clear();
 }
 
