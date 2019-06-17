@@ -262,10 +262,10 @@ class Controller
                     //This will cancel for all the seats after the seat that made a confliction
                     $queryResult = $myModel->select("SELECT seatRow,seatColumn FROM airlinedatabase.Seats WHERE holdingUser = '$purchasingUser' AND seatState = 'selected'");
                     if (mysqli_num_rows($queryResult) > 0) {
-                        while($returnedRow = mysqli_fetch_assoc($queryResult) ){
+                        while ($returnedRow = mysqli_fetch_assoc($queryResult)) {
                             $mySeatRow = $returnedRow['seatRow'];
                             $mySeatColumn = $returnedRow['seatColumn'];
-                            $this->cancelSeatReservation($mySeatRow,$mySeatColumn);
+                            $this->cancelSeatReservation($mySeatRow, $mySeatColumn);
                         }
                     }
                     $_SESSION['purchasedSeats'] = array();
