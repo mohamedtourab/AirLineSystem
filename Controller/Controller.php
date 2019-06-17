@@ -45,15 +45,18 @@ class Controller
 
             $postUserName = $_POST['userName'];
             $postPassword = $_POST['password'];
-            $result = $myModel->select("SELECT * FROM airlinedatabase.Users WHERE userID = '$postUserName'");
+            $myModel->disableAutoCommit();
+            $result = $myModel->select("SELECT * FROM airlinedatabase.Users WHERE userID = '$postUserName' FOR UPDATE");
 
             if (mysqli_num_rows($result) > 0) {
                 $_SESSION = array();
                 session_destroy();
+                $myModel->commitQuery();
                 return 'AlreadyTaken';
             }
             $hashedPassword = password_hash($postPassword, PASSWORD_DEFAULT);
             $myModel->insertUser($postUserName, $hashedPassword);
+            $myModel->commitQuery();
             $_SESSION['LAST_ACTIVITY'] = time();
             $_SESSION['CURRENT_USER_NAME'] = $postUserName;
             return $postUserName;
@@ -234,6 +237,7 @@ class Controller
         }
 
         if (isset($_SESSION['CURRENT_USER_NAME']) && isset($_SESSION['selectedSeats'])) {
+            $myModel->disableAutoCommit();
             foreach ($_SESSION['selectedSeats'] as $seat) {
                 $arr = preg_split('/(?<=[0-9])(?=[a-z]+)/i', $seat);
                 $row = $arr[0];
@@ -241,26 +245,38 @@ class Controller
                 $seatID = $row . $column;
                 $purchasingUser = $_SESSION['CURRENT_USER_NAME'];
                 //check that the user selected this seat is me before buying it
-                $result = $myModel->select("SELECT seatState FROM airlinedatabase.Seats WHERE holdingUser = '$purchasingUser' AND seatRow ='$row' AND seatColumn='$column'");
+                $result = $myModel->select("SELECT seatState FROM airlinedatabase.Seats WHERE holdingUser = '$purchasingUser' AND seatRow ='$row' AND seatColumn='$column' FOR UPDATE");
 
                 if (mysqli_num_rows($result) > 0) { //if the seat holding user is me the seatState will be returned from the query and then I buy it
                     $myModel->updateSeatState('purchased', $purchasingUser, $row, $column);
                     array_push($_SESSION['purchasedSeats'], $seatID);
                 } else {// nothing returned this means someone else selected the seat so I should cancel the buy and free all the seats
                     $returnResult = "Purchase Failed";
+                    //This will cancel all the purchased seats till the seat that made the confliction
                     foreach ($_SESSION['purchasedSeats'] as $seat2) {
                         $arr2 = preg_split('/(?<=[0-9])(?=[a-z]+)/i', $seat2);
                         $row2 = $arr2[0];
                         $column2 = $arr2[1];
                         $this->cancelSeatReservation($row2, $column2);
                     }
+                    //This will cancel for all the seats after the seat that made a confliction
+                    $queryResult = $myModel->select("SELECT seatRow,seatColumn FROM airlinedatabase.Seats WHERE holdingUser = '$purchasingUser' AND seatState = 'selected'");
+                    if (mysqli_num_rows($queryResult) > 0) {
+                        while($returnedRow = mysqli_fetch_assoc($queryResult) ){
+                            $mySeatRow = $returnedRow['seatRow'];
+                            $mySeatColumn = $returnedRow['seatColumn'];
+                            $this->cancelSeatReservation($mySeatRow,$mySeatColumn);
+                        }
+                    }
                     $_SESSION['purchasedSeats'] = array();
                     $_SESSION['selectedSeats'] = array();
                     $_SESSION['LAST_ACTIVITY'] = time();
+                    $myModel->commitQuery();
                     return $returnResult;
                 }
 
             }
+            $myModel->commitQuery();
             //Empty the purchased seats and selected seats
             if ($returnResult == "Purchased Successfully" && isset($_SESSION['purchasedSeats']) && isset($_SESSION['selectedSeats'])) {
                 $_SESSION['selectedSeats'] = array();

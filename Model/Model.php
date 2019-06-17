@@ -72,6 +72,14 @@ class Model
         mysqli_stmt_execute($stmt2);
 
     }
+    function disableAutoCommit(){
+        global $conn;
+        mysqli_autocommit($conn,false);
+    }
+    function commitQuery(){
+        global $conn;
+        mysqli_commit($conn);
+    }
 
 }
 
