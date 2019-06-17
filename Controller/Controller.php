@@ -43,8 +43,11 @@ class Controller
 
         if (isset($_POST['userName']) && isset($_POST['password'])) {
 
-            $postUserName = $_POST['userName'];
-            $postPassword = $_POST['password'];
+            $postUserName = $myModel->sanitizeString($_POST['userName']);
+            $postUserName = strip_tags($postUserName);
+            $postPassword = $myModel->sanitizeString($_POST['password']);
+            $postPassword = strip_tags($postPassword);
+
             $myModel->disableAutoCommit();
             $result = $myModel->select("SELECT * FROM airlinedatabase.Users WHERE userID = '$postUserName' FOR UPDATE");
 
@@ -74,9 +77,13 @@ class Controller
         session_start();
         global $myModel;
 
-        if (isset($_POST['userName']) && isset($_POST['password'])) {
-            $postUserName = $_POST['userName'];
-            $postPassword = $_POST['password'];
+        if (isset($_POST['userName']) && isset($_POST['password']))
+        {
+            $postUserName = $myModel->sanitizeString($_POST['userName']);
+            $postUserName = strip_tags($postUserName);
+            $postPassword = $myModel->sanitizeString($_POST['password']);
+            $postPassword = strip_tags($postPassword);
+
             $result = $myModel->select("SELECT userPassword FROM airlinedatabase.Users WHERE userID = '$postUserName'");
             if (!$result) {
                 $_SESSION = array();

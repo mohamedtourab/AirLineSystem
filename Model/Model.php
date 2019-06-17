@@ -84,6 +84,10 @@ class Model
         global $conn;
         mysqli_commit($conn);
     }
+    function sanitizeString($myString){
+        global $conn;
+        return mysqli_real_escape_string($conn,$myString);
+    }
 
 }
 
