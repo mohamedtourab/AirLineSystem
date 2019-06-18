@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS airlinedatabase;
+/*These commented code for compatibility to submit of the code*/
+/*CREATE DATABASE IF NOT EXISTS airlinedatabase;
 USE airlinedatabase;
 
 drop user if exists 'mohamed'@'localhost';
@@ -7,7 +8,7 @@ flush privileges;
 CREATE USER 'mohamed'@'localhost' IDENTIFIED BY 'mohamed';
 GRANT ALL PRIVILEGES ON *.* TO 'mohamed'@'localhost';
 flush privileges;
-
+*/
 CREATE TABLE IF NOT EXISTS Users
 (
     userID       varchar(255) NOT NULL,

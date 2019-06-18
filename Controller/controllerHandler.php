@@ -3,7 +3,7 @@
 
 require_once 'Controller.php';
 
-$modelData = array("userName" => "mohamed", "password" => "mohamed", "dbName" => "airlinedatabase");
+$modelData = array("userName" => "s259371", "password" => "elogican", "dbName" => "s259371");
 $myController = new Controller($modelData);
 
 $functionsCorrespondingToRequest = array(

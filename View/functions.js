@@ -28,7 +28,7 @@ function sendSignUpForm() {
     if (validateEmail(user_name)) {
 
         $.ajax({
-            url: "../Controller/controllerHandler.php",
+            url: "Controller/controllerHandler.php",
 
             type: "POST", //send it through post method
             data: {signUpRequest: 'yes', userName: user_name, password: user_password},
@@ -61,7 +61,7 @@ function sendLoginForm() {
     }
     if (validateEmail(user_name)) {
         $.ajax({
-            url: "../Controller/controllerHandler.php",
+            url: "Controller/controllerHandler.php",
             type: "POST", //send it through post method
             data: {loginRequest: 'yes', userName: user_name, password: user_password},
             dataType: "text",
@@ -86,7 +86,7 @@ function sendLoginForm() {
 function sendLogoutRequest() {
 
     $.ajax({
-        url: "../Controller/controllerHandler.php",
+        url: "Controller/controllerHandler.php",
         type: "POST", //send it through post method
         data: {logoOutRequest: 'yes'},
         dataType: "text",
@@ -110,7 +110,7 @@ function selectSeat(seat) {
     let seatColumn = regexStr[1];
     let indexOfElementToRemove;
     $.ajax({
-        url: "../Controller/controllerHandler.php",
+        url: "Controller/controllerHandler.php",
         type: "POST", //send it through post method
         data: {checkSeatState: 'yes', row: seatRow, column: seatColumn},
         dataType: 'text',
@@ -177,7 +177,7 @@ function selectSeat(seat) {
 
 function buySeat() {
     $.ajax({
-        url: "../Controller/controllerHandler.php",
+        url: "Controller/controllerHandler.php",
         type: "POST", //send it through post method
         data: {purchaseSeatRequest: 'yes'},
         dataType: "text",
@@ -215,7 +215,7 @@ function updateView() {
     let selectedNumber = 0;
     let purchasedNumber = 0;
     $.ajax({
-        url: "../Controller/controllerHandler.php",
+        url: "Controller/controllerHandler.php",
         type: "POST", //send it through post method
         data: {updateView: 'yes'},
         dataType: 'json',
@@ -273,7 +273,7 @@ function initSeat() {
         welcomingRespone();
     }
     $.ajax({
-        url: "../Controller/controllerHandler.php",
+        url: "Controller/controllerHandler.php",
         type: "POST", //send it through post method
         data: {getPlaneInfo: 'yes'},
         dataType: "text",
