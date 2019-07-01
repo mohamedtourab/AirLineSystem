@@ -25,7 +25,7 @@ function sendSignUpForm() {
         window.alert("Incorrect password please try again.\nPassword must contain at least:\n1-One lowercase letter.\n2- One uppercase letter or a number.");
 
     }
-    if (validateEmail(user_name)) {
+    else if (validateEmail(user_name)) {
 
         $.ajax({
             url: "Controller/controllerHandler.php",

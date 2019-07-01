@@ -1,7 +1,7 @@
 <?php
 require_once('../Model/Model.php');
 
-// TODO add after each wrong response session termination if needed
+// TODO add regex for password in login and sign up
 class Controller
 {
     var $myModel;
@@ -45,8 +45,7 @@ class Controller
 
             $postUserName = $myModel->sanitizeString($_POST['userName']);
             $postUserName = strip_tags($postUserName);
-            $postPassword = $myModel->sanitizeString($_POST['password']);
-            $postPassword = strip_tags($postPassword);
+            $postPassword = $_POST['password'];
 
             $myModel->disableAutoCommit();
             $result = $myModel->select("SELECT * FROM s259371.Users WHERE userID = '$postUserName' FOR UPDATE");
@@ -81,8 +80,7 @@ class Controller
         {
             $postUserName = $myModel->sanitizeString($_POST['userName']);
             $postUserName = strip_tags($postUserName);
-            $postPassword = $myModel->sanitizeString($_POST['password']);
-            $postPassword = strip_tags($postPassword);
+            $postPassword = $_POST['password'];
 
             $result = $myModel->select("SELECT userPassword FROM s259371.Users WHERE userID = '$postUserName'");
             if (!$result) {
