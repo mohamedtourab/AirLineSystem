@@ -48,7 +48,7 @@ class Controller
             $postPassword = $_POST['password'];
 
             $myModel->disableAutoCommit();
-            $result = $myModel->select("SELECT * FROM s259371.Users WHERE userID = '$postUserName' FOR UPDATE");
+            $result = $myModel->select("SELECT * FROM airlineDB.Users WHERE userID = '$postUserName' FOR UPDATE");
 
             if (mysqli_num_rows($result) > 0) {
                 $_SESSION = array();
@@ -82,7 +82,7 @@ class Controller
             $postUserName = strip_tags($postUserName);
             $postPassword = $_POST['password'];
 
-            $result = $myModel->select("SELECT userPassword FROM s259371.Users WHERE userID = '$postUserName'");
+            $result = $myModel->select("SELECT userPassword FROM airlineDB.Users WHERE userID = '$postUserName'");
             if (!$result) {
                 $_SESSION = array();
                 session_destroy();
@@ -145,7 +145,7 @@ class Controller
             $column = $_POST['column'];
             $seatID = $row . $column;
 
-            $result = $myModel->select("SELECT seatState,holdingUser FROM s259371.Seats WHERE seatRow = '$row' AND seatColumn = '$column'");
+            $result = $myModel->select("SELECT seatState,holdingUser FROM airlineDB.Seats WHERE seatRow = '$row' AND seatColumn = '$column'");
             if (!$result) {
                 return 'ERROR IN checkSeatState';
             }
@@ -250,7 +250,7 @@ class Controller
                 $seatID = $row . $column;
                 $purchasingUser = $_SESSION['CURRENT_USER_NAME'];
                 //check that the user selected this seat is me before buying it
-                $result = $myModel->select("SELECT seatState FROM s259371.Seats WHERE holdingUser = '$purchasingUser' AND seatRow ='$row' AND seatColumn='$column' FOR UPDATE");
+                $result = $myModel->select("SELECT seatState FROM airlineDB.Seats WHERE holdingUser = '$purchasingUser' AND seatRow ='$row' AND seatColumn='$column' FOR UPDATE");
 
                 if (mysqli_num_rows($result) > 0) { //if the seat holding user is me the seatState will be returned from the query and then I buy it
                     $myModel->updateSeatState('purchased', $purchasingUser, $row, $column);
@@ -265,7 +265,7 @@ class Controller
                         $this->cancelSeatReservation($row2, $column2);
                     }
                     //This will cancel for all the seats after the seat that made a confliction
-                    $queryResult = $myModel->select("SELECT seatRow,seatColumn FROM s259371.Seats WHERE holdingUser = '$purchasingUser' AND seatState = 'selected'");
+                    $queryResult = $myModel->select("SELECT seatRow,seatColumn FROM airlineDB.Seats WHERE holdingUser = '$purchasingUser' AND seatState = 'selected'");
                     if (mysqli_num_rows($queryResult) > 0) {
                         while ($returnedRow = mysqli_fetch_assoc($queryResult)) {
                             $mySeatRow = $returnedRow['seatRow'];
@@ -309,7 +309,7 @@ class Controller
             return json_encode($myArray);
         }
 
-        $result = $myModel->select("SELECT * FROM s259371.Seats");
+        $result = $myModel->select("SELECT * FROM airlineDB.Seats");
         if (!$result) {
             return 'ERROR IN checkSeatState';
         }
