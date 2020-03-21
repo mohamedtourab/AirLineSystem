@@ -1,7 +1,6 @@
 <?php
 require_once('../Model/Model.php');
 
-// TODO add regex for password in login and sign up
 class Controller
 {
     var $myModel;
