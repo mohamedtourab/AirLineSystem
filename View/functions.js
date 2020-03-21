@@ -44,6 +44,8 @@ function sendSignUpForm() {
             },
             error: function (xhr) {
                 document.write("Error while signup");
+                alert(xhr.status);
+
             }
         });
     } else {
@@ -76,6 +78,7 @@ function sendLoginForm() {
             },
             error: function (xhr) {
                 document.write("Error while login");
+                alert(xhr.status);
             }
         });
     } else {
@@ -98,7 +101,7 @@ function sendLogoutRequest() {
             }
         },
         error: function (xhr) {
-            //Do Something to handle error
+            alert(xhr.status);
         }
     });
 }
@@ -108,7 +111,6 @@ function selectSeat(seat) {
     let regexStr = seatID.match(/[a-z]+|[^a-z]+/gi);
     let seatRow = Number(regexStr[0]);
     let seatColumn = regexStr[1];
-    let indexOfElementToRemove;
     $.ajax({
         url: "Controller/controllerHandler.php",
         type: "POST", //send it through post method
@@ -170,7 +172,7 @@ function selectSeat(seat) {
 
         },
         error: function (xhr) {
-            //Do Something to handle error
+            alert(xhr.status);
         }
     });
 }
@@ -200,8 +202,7 @@ function buySeat() {
             updateView();
         },
         error: function (xhr) {
-
-            //Do Something to handle error
+            alert(xhr.status);
         }
     });
 }
@@ -256,8 +257,7 @@ function updateView() {
             document.getElementById("purchasedSeats").innerHTML = "Purchased: " + purchasedNumber;
         },
         error: function (xhr) {
-
-            //Do Something to handle error
+            alert(xhr.status);
         }
     });
 }
@@ -318,8 +318,7 @@ function initSeat() {
             updateView();
         },
         error: function (xhr) {
-
-            //Do Something to handle error
+            alert(xhr.status);
         }
     });
 
